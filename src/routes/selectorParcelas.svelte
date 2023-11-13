@@ -24,28 +24,31 @@
     let opciones = [];
 
     // Genera las opciones automáticamente.
-    for (let i = 1; i <= 70; i++) {
-        opciones.push(i);
+    for (let i = 0; i <= 70; i++) {
+        if(i == 0)opciones.push("-")
+
+        else opciones.push(i);
     }
 
     // Variable para almacenar el valor seleccionado.
-    let option_value = '';
+    let option_value = '-';
 
     // Función para manejar el cambio en el selector.
     function handleSelectValue(event) {
-        // Almacena el valor seleccionado.
-        option_value = event.target.value;
-
-        // Muestra en la consola el valor seleccionado si no está vacío.
-        if (option_value !== '') {
+        let aux = option_value;
+        aux = event.target.value;
+        // Muestra en la consola el valor seleccionado si no está vacío y lo almacena
+        if (aux !== "-") {
+            option_value = event.target.value;
             console.log(option_value);
-        }
+        }else alert("No has seleccionado parcela")
     }
 </script>
 
 <!-- Etiqueta y selector -->
 <label for={name}>Nº {name}:
     <select id={name} name={name} on:blur={handleSelectValue}>
+
         <!-- Itera sobre las opciones y genera opciones numeradas en el selector. -->
         {#each opciones as opcion (opcion)}
             <option value={opcion}>{opcion}</option>

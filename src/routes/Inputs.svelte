@@ -21,7 +21,7 @@
 
 <script>
     // Importa las props `name`, `id`, y `type` desde el componente padre.
-    export let name, id, type;
+    export let name, id, type, requerido = true;
 
     // Variable para almacenar el valor del campo de entrada.
     let inputvalue ='';
@@ -36,12 +36,19 @@
             console.log(inputvalue);
         }
     }
+
 </script>
 
 <!-- Campo de entrada -->
-<input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name} required>
+    {#if requerido == true}
+        <input id={id} type={type}  on:blur={handleinputvalue} name={name} placeholder={name} required>
+    {:else }
+        <input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name}>
 
-<style>
+    {/if}
+
+
+        <style>
     /* Estilos para todos los campos de entrada */
     input {
         box-sizing: border-box;
@@ -80,5 +87,18 @@
         width: 80%;
         padding: 8px;
         transition: box-shadow 0.3s ease;
+    }
+
+
+    input[type='submit']{
+        width: fit-content;
+        padding: 10px 20px;
+        font-size: 13px;
+        background-color: #5bcc26; /* Color de fondo */
+        color: #000000; /* Color de texto */
+        border: solid   black; /* Sin borde */
+        border-radius: 30px; /* Bordes redondeados */
+        display: block; /* Hace que el botón sea un bloque para poder aplicar márgenes automáticos */
+        margin: 10px auto; /* Centra el botón horizontalmente */
     }
 </style>

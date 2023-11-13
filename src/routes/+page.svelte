@@ -17,32 +17,69 @@
 
 <script>
     import Inputs from "./Inputs.svelte";
-    import Selector from "./selector.svelte"
-    import Envioformulario from "./Envioformulario.svelte";
+    import Selector from "./selectorParcelas.svelte"
     import Boton_luz from "./boton_luz.svelte"
+
+    let formData = {};
+    function enviarFormulario() {
+
+        if (document.getElementById('parcela').value !=='-') {
+            formData = {
+                cliente: {
+                    nombre: document.getElementById('Nombre').value,
+                    apellidos: document.getElementById('Apellidos').value,
+                    dni: document.getElementById('DNI').value,
+                    ciudad: document.getElementById('Ciudad').value,
+                    email: document.getElementById('Email').value,
+                    direccion: document.getElementById('Direccion').value,
+                    telefono: document.getElementById('Telefono').value,
+                    matricula: document.getElementById('Matricula').value,
+                    fechaEntrada: document.getElementById('fecha_Entrada').value,
+                    fechaNacimiento: document.getElementById('fecha_Nacimiento').value,
+                    fechaExpedicion: document.getElementById('fecha_Expedicion').value,
+                    parcela: document.getElementById('parcela').value,
+                    luz: document.getElementById('Luz').checked
+                },
+            };
+            // Muestra una alerta indicando que el formulario ha sido enviado.
+            alert("Formulario enviado");
+            // Registra en la consola un mensaje indicando que el formulario ha sido enviado.
+            console.log(formData);
+        } else{
+            alert("Datos no enviados, no ha seleccionado parcela")
+        }
+
+
+    }
+
 </script>
 
 <body>
 <div class="main">
-    <!-- Campos de Entrada -->
-    <Inputs name="Nombre" id="Nombre" type="text"/>
-    <Inputs name="Apellidos" id="Apellidos" type="text"/>
-    <Inputs name="DNI" id="DNI" type="text"/>
-    <Inputs name="Ciudad" id="Ciudad" type="text"/>
-    <Inputs name="Email" id="Email" type="text"/>
-    <Inputs name="Dirección" id="Direccion" type="text"/>
-    <Inputs name="Telefono" id="Telefono" type="text"/>
-    <Inputs name="Matricula" id="Matricula" type="text"/>
+    <form on:submit={enviarFormulario}>
+        <!-- Campos de Entrada -->
+        <Inputs name="Nombre" id="Nombre" type="text"/>
+        <Inputs name="Apellidos" id="Apellidos" type="text"/>
+        <Inputs name="DNI" id="DNI" type="text"/>
+        <Inputs name="Ciudad" id="Ciudad" type="text"/>
+        <Inputs name="Email" id="Email" type="text"/>
+        <Inputs name="Dirección" id="Direccion" type="text"/>
+        <Inputs name="Telefono" id="Telefono" type="text"/>
+        <Inputs name="Matricula" id="Matricula" type="text"/>
 
-    <!-- Campos de Fecha -->
-    <label>Fecha entrada     <Inputs name="fecha Entrada" id="fecha_Entrada" type="date"/></label>
-    <label>Fecha nacimiento   <Inputs name="fecha Nacimiento" id="fecha_Nacimiento" type="date"/></label>
-    <label>Fecha expedición   <Inputs name="fecha Expedicion" id="fecha_Expedicion" type="date"/></label>
+        <!-- Campos de Fecha -->
+        <label>Fecha entrada     <Inputs name="fecha Entrada" id="fecha_Entrada" type="date"/></label>
+        <label>Fecha nacimiento   <Inputs name="fecha Nacimiento" id="fecha_Nacimiento" type="date" requerido=false /></label>
+        <label>Fecha expedición   <Inputs name="fecha Expedicion" id="fecha_Expedicion" type="date"/></label>
 
-    <!-- Selector, Botón de Luz y Componente de Envío -->
+
+
+
+        <!-- Selector, Botón de Luz y Componente de Envío -->
     <Selector name="parcela"/>
     <Boton_luz/>
-    <Envioformulario/>
+        <Inputs name="boton" id="boton" type="submit"/>
+    </form>
 </div>
 </body>
 
