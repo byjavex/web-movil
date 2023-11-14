@@ -37,7 +37,7 @@
 <style>
     /* Estilos para el encabezado */
     div {
-        box-shadow: -1px -1px 10px black;
+        border-bottom: 2px solid black;
         background-color: #6bec48;
         width: 100%;
         height: 7rem;
@@ -54,4 +54,33 @@
         width: 10rem;
         height: 10rem;
     }
+    h1{
+        font-family: "JetBrains Mono ExtraBold";
+    }
+    /* Media query para pantallas de hasta 600px (puedes ajustar este valor según tus necesidades) */
+    @media only screen and (max-width: 600px) {
+        div {
+            height: 10%; /* Ajusta la altura automáticamente en dispositivos móviles */
+            width: auto;
+            font-size: 9px;
+
+        }
+
+        #profile {
+            width: 30%; /* Ajusta el tamaño de la imagen según tus necesidades */
+            height: auto; /* Ajusta la altura automáticamente en dispositivos móviles */
+        }
+    }
+
+    @media only screen and (max-width: 200px) {
+        div {
+            font-size: 6px;
+        }
+
+        #profile {
+            width: 30%; /* Ajusta el tamaño de la imagen según tus necesidades */
+            height: auto; /* Ajusta la altura automáticamente en dispositivos móviles */
+        }
+    }
+
 </style>

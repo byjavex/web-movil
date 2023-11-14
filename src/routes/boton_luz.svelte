@@ -30,7 +30,40 @@
 
 <!-- Etiqueta y checkbox -->
 <label>
-    Luz
-    <!-- Checkbox vinculado al estado `isChecked` y con un manejador de clic (`handleClick`). -->
+    <span>Luz</span>
     <input id="Luz" type="checkbox" bind:value={isChecked} on:click={handleClick} />
 </label>
+<style>
+    /* Estilos generales del label */
+    label {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px; /* Ajusta según sea necesario */
+    }
+
+    /* Estilo del texto "Luz" */
+    label span {
+        margin-right: 10px; /* Espacio entre el texto y el checkbox */
+    }
+
+    /* Estilo del checkbox */
+    input[type="checkbox"] {
+        /* Puedes personalizar estos estilos según tus preferencias */
+        appearance: none;
+        width: 20px; /* Ancho del checkbox */
+        height: 20px; /* Altura del checkbox */
+        border: 2px solid #333; /* Borde del checkbox */
+        border-radius: 4px; /* Bordes redondeados */
+        margin-right: 5px; /* Espacio entre el checkbox y el texto */
+        cursor: pointer;
+    }
+
+    /* Estilo del checkbox cuando está marcado */
+    input[type="checkbox"]:checked {
+        background-color: rgb(221, 255, 0); /* Cambia el color de fondo cuando está marcado */
+        border-color: #000000; /* Cambia el color del borde cuando está marcado */
+    }
+
+
+
+</style>

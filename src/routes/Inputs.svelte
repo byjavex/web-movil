@@ -37,18 +37,39 @@
         }
     }
 
+
+    function getFechaActual() {
+        const today = new Date();
+        const year = today.getFullYear();
+        let month = today.getMonth() + 1; // Meses en JavaScript son de 0 a 11
+        let day = today.getDate();
+
+        // Agrega un cero delante si el mes o el día es menor que 10
+        month = month < 10 ? '0' + month : month;
+        day = day < 10 ? '0' + day : day;
+
+        return `${year}-${month}-${day}`;
+    }
+
+
 </script>
 
 <!-- Campo de entrada -->
-    {#if requerido == true}
-        <input id={id} type={type}  on:blur={handleinputvalue} name={name} placeholder={name} required>
+{#if requerido == true}
+    {#if type === 'date' && id === 'fecha_Expedicion'}
+        <input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name} required value={getFechaActual()}>
     {:else }
-        <input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name}>
-
+        <input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name} required>
     {/if}
+{:else }
+    <input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name}>
+{/if}
 
 
-        <style>
+
+
+
+<style>
     /* Estilos para todos los campos de entrada */
     input {
         box-sizing: border-box;
