@@ -38,7 +38,7 @@
     /* Estilos para el encabezado */
     div {
         border-bottom: 2px solid black;
-        background-color: #6bec48;
+        background-color: #9BE8D8;
         width: 100%;
         height: 7rem;
         display: flex;

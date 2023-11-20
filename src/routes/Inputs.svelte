@@ -77,7 +77,7 @@
         margin-left: auto;
         margin-right: auto;
         display: block;
-        border: 2px solid #ccc;
+        border: 2px solid #000000;
         border-radius: 4px;
         width: 80%;
         padding: 8px;
@@ -103,7 +103,7 @@
         margin-left: auto;
         margin-right: auto;
         display: block;
-        border: 2px solid #ccc;
+        border: 2px solid #000000;
         border-radius: 4px;
         width: 80%;
         padding: 8px;
