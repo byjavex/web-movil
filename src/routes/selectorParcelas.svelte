@@ -24,11 +24,19 @@
     let opciones = [];
 
     // Genera las opciones automáticamente.
+    if(name==='parcela'){
     for (let i = 0; i <= 70; i++) {
         if(i == 0)opciones.push("-")
 
         else opciones.push(i);
-    }
+    }}
+
+    if(name==='clientes'){
+        for (let i = 0; i <= 15; i++) {
+            if(i == 0)opciones.push("-")
+
+            else opciones.push(i);
+        }}
 
     // Variable para almacenar el valor seleccionado.
     let option_value = '-';

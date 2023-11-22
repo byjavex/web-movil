@@ -78,7 +78,8 @@
                     fechaNacimiento: document.getElementById('fecha_Nacimiento').value,
                     fechaExpedicion: document.getElementById('fecha_Expedicion').value,
                     parcela: document.getElementById('parcela').value,
-                    luz: document.getElementById('Luz').checked
+                    luz: document.getElementById('Luz').checked,
+                    Ncliente: document.getElementById('clientes').value
                 },
             };
             // Muestra una alerta indicando que el formulario ha sido enviado.
@@ -118,8 +119,11 @@
         <!-- Contenedor para Selector, Botón de Luz y Componente de Envío -->
         <div id="con">
             <Selector name="parcela" />
+            <Selector name="clientes" />
             <Boton_luz />
         </div>
+
+
 
         <!-- Botón de envío del formulario -->
         <Inputs name="boton" id="boton" type="submit" />
@@ -133,8 +137,12 @@
         padding-top: 20px;
     }
 
+
+
     /* Ajuste de tamaño de fuente para mejorar la legibilidad de las etiquetas */
     label {
         font-size: 12px;
     }
 </style>
+
+
