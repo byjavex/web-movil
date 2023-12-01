@@ -33,6 +33,7 @@
     import Selector from "./selectorParcelas.svelte";
     import Boton_luz from "./boton_luz.svelte";
     import { browser } from "$app/environment";
+    import Acompanante from "./Acompanante.svelte";
 
     // Inicialización de variables y conexión WebSocket
     let socket;
@@ -64,6 +65,7 @@
         // Verificación de la selección de parcela antes de enviar los datos
         if (document.getElementById('parcela').value !== '-') {
             // Recopilación de datos de los campos del formulario
+            let NumAcompanante = document.getElementById('acompanante');
             formData = {
                 cliente: {
                     nombre: document.getElementById('Nombre').value,
@@ -80,8 +82,22 @@
                     parcela: document.getElementById('parcela').value,
                     luz: document.getElementById('Luz').checked,
                     Ncliente: document.getElementById('clientes').value
-                },
+                }
             };
+            if (NumAcompanante.value > 0) {
+                for (let i = 0; i < NumAcompanante.value; i++) {
+                    formData["Acompanante: " + i] = {
+                        nombre: document.getElementById('Nombre' + i).value,
+                        apellidos: document.getElementById('Apellidos' + i).value,
+                        dni: document.getElementById('DNI' + i).value,
+                        tipo_documento: document.getElementById('Documento' + i).value,
+                        sexo: document.getElementById('Sexo' + i).value,
+                        fechaEntrada: document.getElementById('fecha_Entrada' + i).value,
+                        fechaSalida: document.getElementById('fecha_Salida' + i).value,
+                        fechaExpedicion: document.getElementById('fecha_Expedicion' + i).value
+                    };
+                }
+            }
             // Muestra una alerta indicando que el formulario ha sido enviado.
             alert("Formulario enviado");
             // Registra en la consola un mensaje indicando que el formulario ha sido enviado.
@@ -123,6 +139,10 @@
             <Boton_luz />
         </div>
 
+        <!-- Llama al componente Acompañante si el número de acompañantes es mayor que 0 -->
+        {#if  document.getElementById('acompanante').value > 0 }
+            <Acompanante/>
+        {/if}
 
 
         <!-- Botón de envío del formulario -->
@@ -130,6 +150,8 @@
     </form>
 </div>
 </body>
+
+
 
 <style>
     /* Estilos generales para el formulario principal */

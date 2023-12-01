@@ -29,14 +29,16 @@
         if(i == 0)opciones.push("-")
 
         else opciones.push(i);
-    }}
+        }
+    }
 
     if(name==='clientes'){
-        for (let i = 0; i <= 15; i++) {
+        for (let i = 1; i <= 5; i++) {
             if(i == 0)opciones.push("-")
 
             else opciones.push(i);
-        }}
+        }
+    }
 
     // Variable para almacenar el valor seleccionado.
     let option_value = '-';
@@ -55,11 +57,21 @@
 
 <!-- Etiqueta y selector -->
 <label for={name}>Nº {name}:
-    <select id={name} name={name} on:blur={handleSelectValue}>
+    {#if name == 'clientes'}
+        <select id={name} name={name} on:blur={handleSelectValue} on:change={handleSelectValue} >
+            <!-- Itera sobre las opciones y genera opciones numeradas en el selector. -->
+            <option value= 0 selected>0</option>
+            {#each opciones as opcion (opcion)}
+                <option value={opcion}>{opcion}</option>
+            {/each}
+        </select>
+    {:else}
+        <select id={name} name={name} on:blur={handleSelectValue}>
 
-        <!-- Itera sobre las opciones y genera opciones numeradas en el selector. -->
-        {#each opciones as opcion (opcion)}
-            <option value={opcion}>{opcion}</option>
-        {/each}
-    </select>
+            <!-- Itera sobre las opciones y genera opciones numeradas en el selector. -->
+            {#each opciones as opcion (opcion)}
+                <option value={opcion}>{opcion}</option>
+            {/each}
+        </select>
+    {/if}
 </label>
