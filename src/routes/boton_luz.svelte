@@ -31,7 +31,7 @@
 <!-- Etiqueta y checkbox -->
 <label>
     <span>Luz</span>
-    <input id="Luz" type="checkbox" bind:value={isChecked} on:click={handleClick} />
+    <input id="Luz" type="checkbox"  on:click={handleClick} />
 </label>
 <style>
     /* Estilos generales del label */
