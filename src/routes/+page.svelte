@@ -33,6 +33,10 @@
     import Selector from "./selectorParcelas.svelte";
     import Boton_luz from "./boton_luz.svelte";
     import { browser } from "$app/environment";
+    import Acompanante from "./Acompanante.svelte";
+    import { afterUpdate } from 'svelte';
+
+    let mostrarAcompanante = false;
 
     // Inicialización de variables y conexión WebSocket
     let socket;
@@ -56,6 +60,15 @@
         }
     }
 
+    // Función para comprobar si se ha seleccionado clientes
+    function Comprobacion() {
+        return document.getElementById('clientes').value !== '-';
+    }
+
+    afterUpdate(() => {
+        mostrarAcompanante = Comprobacion();
+    });
+
     // Objeto para almacenar datos del formulario
     let formData = {};
 
@@ -64,6 +77,7 @@
         // Verificación de la selección de parcela antes de enviar los datos
         if (document.getElementById('parcela').value !== '-') {
             // Recopilación de datos de los campos del formulario
+            let NumAcompanante = document.getElementById('clientes');
             formData = {
                 cliente: {
                     nombre: document.getElementById('Nombre').value,
@@ -79,9 +93,20 @@
                     fechaExpedicion: document.getElementById('fecha_Expedicion').value,
                     parcela: document.getElementById('parcela').value,
                     luz: document.getElementById('Luz').checked,
-                    Ncliente: document.getElementById('clientes').value
-                },
+                    NAcompanante: document.getElementById('clientes').value
+                }
             };
+            if (NumAcompanante.value > 0) {
+                for (let i = 0; i < NumAcompanante.value; i++) {
+                    formData["Acompanante: " + i] = {
+                        nombre: document.getElementById('Nombre' + i).value,
+                        apellidos: document.getElementById('Apellidos' + i).value,
+                        dni: document.getElementById('DNI' + i).value,
+                        tipo_documento: document.getElementById('Documento' + i).value,
+                        sexo: document.getElementById('Sexo' + i).value
+                    };
+                }
+            }
             // Muestra una alerta indicando que el formulario ha sido enviado.
             alert("Formulario enviado");
             // Registra en la consola un mensaje indicando que el formulario ha sido enviado.
@@ -119,17 +144,21 @@
         <!-- Contenedor para Selector, Botón de Luz y Componente de Envío -->
         <div id="con">
             <Selector name="parcela" />
-            <Selector name="clientes" />
             <Boton_luz />
         </div>
 
-
+        <!-- Llama al componente Acompañante si Comprobacion es true   -->
+        {#if mostrarAcompanante}
+        <Acompanante />
+        {/if}
 
         <!-- Botón de envío del formulario -->
         <Inputs name="boton" id="boton" type="submit" />
     </form>
 </div>
 </body>
+
+
 
 <style>
     /* Estilos generales para el formulario principal */

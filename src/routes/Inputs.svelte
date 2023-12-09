@@ -56,7 +56,7 @@
 
 <!-- Campo de entrada -->
 {#if requerido == true}
-    {#if type === 'date' && id === 'fecha_Expedicion'}
+    {#if type === 'date' && id === 'fecha_Entrada'}
         <input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name} required value={getFechaActual()}>
     {:else }
         <input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name} required>

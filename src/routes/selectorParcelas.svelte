@@ -29,14 +29,11 @@
         if(i == 0)opciones.push("-")
 
         else opciones.push(i);
-    }}
-
-    if(name==='clientes'){
-        for (let i = 0; i <= 15; i++) {
-            if(i == 0)opciones.push("-")
-
-            else opciones.push(i);
-        }}
+        }
+    }
+    else if(name==='Tipo-Documento'){
+        opciones = ['DNI', 'Pasaporte', 'Carnet de Extranjería'];
+    }
 
     // Variable para almacenar el valor seleccionado.
     let option_value = '-';
@@ -51,15 +48,25 @@
             console.log(option_value);
         }else alert("No has seleccionado parcela")
     }
+
 </script>
 
 <!-- Etiqueta y selector -->
 <label for={name}>Nº {name}:
-    <select id={name} name={name} on:blur={handleSelectValue}>
+    {#if name == 'Tipo-Documento'}
+        <select id={name} name={name} on:blur={handleSelectValue} on:change={handleSelectValue} >
+            <!-- Itera sobre las opciones y genera opciones numeradas en el selector. -->
+            {#each opciones as opcion (opcion)}
+                <option value={opcion}>{opcion}</option>
+            {/each}
+        </select>
+    {:else}
+        <select id={name} name={name} on:blur={handleSelectValue}>
 
-        <!-- Itera sobre las opciones y genera opciones numeradas en el selector. -->
-        {#each opciones as opcion (opcion)}
-            <option value={opcion}>{opcion}</option>
-        {/each}
-    </select>
+            <!-- Itera sobre las opciones y genera opciones numeradas en el selector. -->
+            {#each opciones as opcion (opcion)}
+                <option value={opcion}>{opcion}</option>
+            {/each}
+        </select>
+    {/if}
 </label>
