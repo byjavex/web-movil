@@ -19,6 +19,8 @@
 <script>
     // Importa la prop `name` desde el componente padre.
     export let name;
+    // Variable para almacenar el valor por defecto de clientes.
+    let defaultValue = 0;
 
     // Arreglo para almacenar opciones numéricas del 1 al 70.
     let opciones = [];
@@ -31,8 +33,11 @@
         else opciones.push(i);
         }
     }
-    else if(name==='Tipo-Documento'){
-        opciones = ['DNI', 'Pasaporte', 'Carnet de Extranjería'];
+
+    if(name==='clientes'){
+        for (let i = 0; i <= 5; i++) {
+        opciones.push(i);
+        }
     }
 
     // Variable para almacenar el valor seleccionado.
@@ -49,12 +54,17 @@
         }else alert("No has seleccionado parcela")
     }
 
+    // Función para manejar el cambio en el selector clientes.
+    function handleDefaultValue(event) {
+        defaultValue = event.target.value;
+        console.log(defaultValue);
+    }
 </script>
 
 <!-- Etiqueta y selector -->
 <label for={name}>Nº {name}:
-    {#if name == 'Tipo-Documento'}
-        <select id={name} name={name} on:blur={handleSelectValue} on:change={handleSelectValue} >
+    {#if name == 'clientes'}
+        <select id={name} name={name} on:blur={handleDefaultValue} on:change={handleDefaultValue} bind:value={defaultValue} >
             <!-- Itera sobre las opciones y genera opciones numeradas en el selector. -->
             {#each opciones as opcion (opcion)}
                 <option value={opcion}>{opcion}</option>
