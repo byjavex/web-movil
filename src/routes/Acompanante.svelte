@@ -46,9 +46,10 @@
         {#each Array(numAcompanantes) as _, i}
             <div>
                 <h3>Acompañante {i + 1}</h3>
-                <Inputs name={`Nombre${i}`} id={`Nombre${i}`} type="text" placeholder={`Nombre Acompañante ${i + 1}`} />
-                <Inputs name={`Apellidos${i}`} id={`Apellidos${i}`} type="text" placeholder={`Apellidos Acompañante ${i + 1}`} />
-                <Inputs name={`DNI${i}`} id={`DNI${i}`} type="text" placeholder={`DNI Acompañante ${i + 1}`} />
+                <Inputs name={`Nombre del acompanante ${i + 1}`} id={`Nombre${i}`} type="text"  />
+                <Inputs name={`Apellidos del acompanante ${i + 1}`} id={`Apellidos${i}`} type="text"  />
+                <Inputs name={`DNI del acompanante ${i + 1}`} id={`DNI${i}`} type="text"  />
+                <Inputs name={`Tipo_Documento del acompanante ${i + 1}`} id={`Tipo_Documento${i}`} type="text"  />
                 <!-- Agrega más campos según sea necesario -->
 
             </div>
