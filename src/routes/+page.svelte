@@ -93,7 +93,7 @@
                     fechaExpedicion: document.getElementById('fecha_Expedicion').value,
                     parcela: document.getElementById('parcela').value,
                     luz: document.getElementById('Luz').checked,
-                    NAcompanante: document.getElementById('clientes').value
+                    Ncliente: document.getElementById('clientes').value
                 }
             };
             if (NumAcompanante.value > 0) {
@@ -103,7 +103,10 @@
                         apellidos: document.getElementById('Apellidos' + i).value,
                         dni: document.getElementById('DNI' + i).value,
                         tipo_documento: document.getElementById('Documento' + i).value,
-                        sexo: document.getElementById('Sexo' + i).value
+                        sexo: document.getElementById('Sexo' + i).value,
+                        fechaEntrada: document.getElementById('fecha_Entrada' + i).value,
+                        fechaSalida: document.getElementById('fecha_Salida' + i).value,
+                        fechaExpedicion: document.getElementById('fecha_Expedicion' + i).value
                     };
                 }
             }
@@ -144,6 +147,7 @@
         <!-- Contenedor para Selector, Botón de Luz y Componente de Envío -->
         <div id="con">
             <Selector name="parcela" />
+            <Selector name="clientes" />
             <Boton_luz />
         </div>
 
