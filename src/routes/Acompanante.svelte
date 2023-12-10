@@ -3,7 +3,7 @@
 <script>
     import Inputs from "./Inputs.svelte";
 
-    export let numAcompanantes = 0;
+    let numAcompanantes = 0;
 
     function agregarAcompanante() {
         numAcompanantes += 1;
