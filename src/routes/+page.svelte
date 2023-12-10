@@ -125,7 +125,7 @@
 <div class="main">
     <!-- Formulario con campos de entrada, selectores y botones -->
     <form on:submit={enviarFormulario}>
-
+        <h2>Cliente principal</h2>
         <!-- Campos de Entrada -->
         <Inputs name="Nombre" id="Nombre" type="text" />
         <Inputs name="Apellidos" id="Apellidos" type="text" />
@@ -144,7 +144,7 @@
         <!-- Contenedor para Selector, Botón de Luz y Componente de Envío -->
         <div id="con">
             <Selector name="parcela" />
-            <Selector name="clientes" />
+
             <Boton_luz />
         </div>
 
@@ -172,6 +172,10 @@
     /* Ajuste de tamaño de fuente para mejorar la legibilidad de las etiquetas */
     label {
         font-size: 12px;
+    }
+
+    h2{
+        padding-bottom: 10px;
     }
 </style>
 
