@@ -34,9 +34,13 @@
     import Boton_luz from "./boton_luz.svelte";
     import { browser } from "$app/environment";
     import Acompanante from "./Acompanante.svelte";
-    import { afterUpdate } from 'svelte';
+    import { onMount } from 'svelte';
+    import { numAcompanantes } from './Acompanante.svelte';
 
-    let mostrarAcompanante = false;
+    let numAcompanantesValue = numAcompanantes; // Variable local para almacenar el valor actual de numAcompanantes
+
+
+
 
     // Inicialización de variables y conexión WebSocket
     let socket;
@@ -60,14 +64,6 @@
         }
     }
 
-    // Función para comprobar si se ha seleccionado clientes
-    function Comprobacion() {
-        return document.getElementById('clientes').value !== '-';
-    }
-
-    afterUpdate(() => {
-        mostrarAcompanante = Comprobacion();
-    });
 
     // Objeto para almacenar datos del formulario
     let formData = {};
@@ -77,7 +73,7 @@
         // Verificación de la selección de parcela antes de enviar los datos
         if (document.getElementById('parcela').value !== '-') {
             // Recopilación de datos de los campos del formulario
-            let NumAcompanante = document.getElementById('clientes');
+            let NumAcompanante = numAcompanantesValue
             formData = {
                 cliente: {
                     nombre: document.getElementById('Nombre').value,
@@ -152,9 +148,9 @@
         </div>
 
         <!-- Llama al componente Acompañante si Comprobacion es true   -->
-        {#if mostrarAcompanante}
+
         <Acompanante />
-        {/if}
+
 
         <!-- Botón de envío del formulario -->
         <Inputs name="boton" id="boton" type="submit" />

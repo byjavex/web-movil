@@ -25,35 +25,43 @@
 <!-- Acompanante.svelte -->
 
 <script>
+    import { writable } from 'svelte/store'
     import Inputs from "./Inputs.svelte";
-    let numAcompanantes = 0;
+    // Crea un store writable para almacenar el número de acompañantes
+    export const numAcompanantes = writable(0);
 
     // Función para agregar campos de acompañante dinámicamente
     function agregarAcompanante() {
-        numAcompanantes += 1;
+        $numAcompanantes.update(n => n + 1);  // Incrementa el valor del store
     }
+
     function eliminarAcompanante() {
-        numAcompanantes -= 1;
+        $numAcompanantes.update(n => n - 1);  // Decrementa el valor del store
     }
 </script>
 
 <div>
-    <!-- Botón para agregar acompañante -->
-    <button on:click={agregarAcompanante}>Agregar Acompañante</button>
-    <button on:click={eliminarAcompanante}>Eliminar Acompañante</button>
+
+
     <!-- Campos de acompañante dinámicos -->
     {#if numAcompanantes > 0}
         {#each Array(numAcompanantes) as _, i}
             <div>
                 <h3>Acompañante {i + 1}</h3>
-                <Inputs name={`Nombre${i}`} id={`Nombre${i}`} type="text" placeholder={`Nombre Acompañante ${i + 1}`} />
-                <Inputs name={`Apellidos${i}`} id={`Apellidos${i}`} type="text" placeholder={`Apellidos Acompañante ${i + 1}`} />
-                <Inputs name={`DNI${i}`} id={`DNI${i}`} type="text" placeholder={`DNI Acompañante ${i + 1}`} />
+                <Inputs name={`Nombre${i}`} id={`Nombre${i}`} type="text"  />
+                <Inputs name={`Apellidos${i}`} id={`Apellidos${i}`} type="text"  />
+                <Inputs name={`DNI${i}`} id={`DNI${i}`} type="text"  />
                 <!-- Agrega más campos según sea necesario -->
 
             </div>
         {/each}
     {/if}
+
+    <!-- Botón para agregar acompañante -->
+    <button type="button" on:click={agregarAcompanante}>Agregar Acompañante</button>
+    <button type="button" on:click={eliminarAcompanante}>Eliminar Acompañante</button>
+
+
 </div>
 
 <style>
