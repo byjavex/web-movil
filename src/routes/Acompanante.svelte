@@ -2,24 +2,13 @@
 
 <script>
     import Inputs from "./Inputs.svelte";
+    import { writable } from "svelte/store";
 
-    let numAcompanantes = 0;
+    // Crear un store para numAcompanantes
+    export let numAcompanantes;
 
-    function agregarAcompanante() {
-        numAcompanantes += 1;
-    }
-
-    function eliminarAcompanante() {
-        // Verifica si hay acompañantes antes de mostrar el mensaje de confirmación
-        if (numAcompanantes > 0) {
-            const confirmacion = window.confirm("¿Estás seguro de eliminar el acompañante?");
-
-            if (confirmacion && numAcompanantes > 0) {
-                numAcompanantes -= 1;
-            }
-        }
-    }
 </script>
+
 
 <div>
     {#if numAcompanantes > 0}
@@ -38,13 +27,7 @@
         {/each}
     {/if}
 
-    <!-- Botón para agregar acompañante -->
-    <button id = "agregar" type="button" on:click={agregarAcompanante}>Agregar Acompañante</button>
 
-    <!-- Botón para eliminar acompañante, solo si hay acompañantes -->
-    {#if numAcompanantes > 0}
-        <button id = "eliminar" type="button" on:click={eliminarAcompanante}>Eliminar Acompañante</button>
-    {/if}
 </div>
 
 <style>
@@ -52,25 +35,5 @@
         padding-bottom: 10px;
     }
 
-    #agregar{
 
-        padding: 10px 10px;
-        font-size: 16px;
-        background-color: #84de59; /* Color de fondo */
-        color: #000000; /* Color de texto */
-        border: solid   black; /* Sin borde */
-        border-radius: 30px; /* Bordes redondeados */
-        display: inline-block;
-    }
-
-    #eliminar{
-
-        padding: 10px 10px;
-        font-size: 16px;
-        background-color: rgb(231, 21, 21); /* Color de fondo */
-        color: #000000; /* Color de texto */
-        border: solid   black; /* Sin borde */
-        border-radius: 30px; /* Bordes redondeados */
-        display: inline-block;
-    }
 </style>

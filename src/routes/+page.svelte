@@ -34,14 +34,12 @@
     import Boton_luz from "./boton_luz.svelte";
     import { browser } from "$app/environment";
     import Acompanante from "./Acompanante.svelte";
-    import { onMount } from 'svelte';
-    //import { numAcompanantes } from '$routes/Acompanante.svelte';
-
-    import {afterUpdate} from "svelte";
 
 
 
-    let numAcompanantesValue = 0; // Variable local para almacenar el valor actual de numAcompanantes
+    // Crea una variable reactiva para almacenar el valor del store
+    let numAcompanantesValue = 0;
+
 
 
 
@@ -68,6 +66,22 @@
         }
     }
 
+
+    function agregarAcompanante() {
+        numAcompanantesValue += 1;
+        console.log(numAcompanantesValue+" fuera")
+    }
+
+    function eliminarAcompanante() {
+        // Verifica si hay acompañantes antes de mostrar el mensaje de confirmación
+        if (numAcompanantesValue > 0) {
+            const confirmacion = window.confirm("¿Estás seguro de eliminar el acompañante?");
+
+            if (confirmacion && numAcompanantesValue > 0) {
+                numAcompanantesValue -= 1;
+            }
+        }
+    }
 
     // Objeto para almacenar datos del formulario
     let formData = {};
@@ -96,9 +110,9 @@
                     Ncliente: document.getElementById('clientes').value
                 }
             };
-            if (NumAcompanante.value > 0) {
-                for (let i = 0; i < NumAcompanante.value; i++) {
-                    formData["Acompanante: " + i] = {
+            if (NumAcompanante> 0) {
+                for (let i = 0; i < NumAcompanante; i++) {
+                    formData["Acompanante" + i] = {
                         nombre: document.getElementById('Nombre' + i).value,
                         apellidos: document.getElementById('Apellidos' + i).value,
                         dni: document.getElementById('DNI' + i).value,
@@ -150,8 +164,15 @@
 
         <!-- Llama al componente Acompañante si Comprobacion es true   -->
 
-        <Acompanante />
+        <Acompanante numAcompanantes={numAcompanantesValue} />
 
+        <!-- Botón para agregar acompañante -->
+        <button id = "agregar" type="button" on:click={agregarAcompanante}>Agregar Acompañante</button>
+
+        <!-- Botón para eliminar acompañante, solo si hay acompañantes -->
+        {#if numAcompanantesValue > 0}
+            <button id = "eliminar" type="button" on:click={eliminarAcompanante}>Eliminar Acompañante</button>
+        {/if}
 
         <!-- Botón de envío del formulario -->
         <Inputs name="boton" id="boton" type="submit" />
@@ -176,6 +197,29 @@
 
     h2{
         padding-bottom: 10px;
+    }
+
+
+    #agregar{
+
+        padding: 10px 10px;
+        font-size: 16px;
+        background-color: #84de59; /* Color de fondo */
+        color: #000000; /* Color de texto */
+        border: solid   black; /* Sin borde */
+        border-radius: 30px; /* Bordes redondeados */
+        display: inline-block;
+    }
+
+    #eliminar{
+
+        padding: 10px 10px;
+        font-size: 16px;
+        background-color: rgb(231, 21, 21); /* Color de fondo */
+        color: #000000; /* Color de texto */
+        border: solid   black; /* Sin borde */
+        border-radius: 30px; /* Bordes redondeados */
+        display: inline-block;
     }
 </style>
 
