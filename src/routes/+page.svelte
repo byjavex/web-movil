@@ -107,7 +107,7 @@
                     fechaExpedicion: document.getElementById('fecha_Expedicion').value,
                     parcela: document.getElementById('parcela').value,
                     luz: document.getElementById('Luz').checked,
-                    Ncliente: document.getElementById('clientes').value
+                    Ncliente: NumAcompanante
                 }
             };
             if (NumAcompanante> 0) {
