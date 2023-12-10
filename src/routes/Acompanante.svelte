@@ -1,26 +1,4 @@
-<!--
-<script>
-    import Inputs from "./Inputs.svelte";
-    let listaAcompanantes = [];
-    for (let i = 0; i < document.getElementById('clientes').value; i++) {
-        listaAcompanantes.push(i);
-    }
-</script>
 
-{#each listaAcompanantes as persona (persona)}
-    <Inputs name={"Nombre" + persona} id={"Nombre" + persona} type="text" />
-    <Inputs name={"Apellidos" + persona} id={"Apellidos" + persona} type="text" />
-    <Inputs name={"DNI" + persona} id={"DNI" + persona} type="text" />
-    <Inputs name={"Tipo_Documento" + persona} id={"Tipo_Documento" + persona} type="text" />
-    <Inputs name={"Sexo" + persona} id={"Sexo" + persona} type="text" />
-
-
-    <label for={"fecha_Entrada" + persona}>Fecha entrada <Inputs name={"fecha Entrada" + persona} id={"fecha_Entrada" + persona} type="date" /></label>
-    <label for={"fecha_Nacimiento" + persona}>Fecha nacimiento <Inputs name={"fecha Nacimiento" + persona} id={"fecha_Nacimiento" + persona} type="date" requerido={false} /></label>
-    <label for={"fecha_Expedicion" + persona}>Fecha expedición <Inputs name={"fecha Expedicion" + persona} id={"fecha_Expedicion" + persona} type="date" /></label>
-{/each}
--->
-<!-- Acompanante.svelte -->
 
 <!-- Acompanante.svelte -->
 
@@ -28,7 +6,7 @@
 
     import Inputs from "./Inputs.svelte";
     // Crea un store writable para almacenar el número de acompañantes
-    let numAcompanantes = 0
+    export let numAcompanantes = 0
 
     // Función para agregar campos de acompañante dinámicamente
     function agregarAcompanante() {
@@ -52,6 +30,12 @@
                 <Inputs name={`Apellidos del acompañante ${i + 1}`} id={`Apellidos${i + 1}`} type="text" />
                 <Inputs name={`DNI del acompañante ${i + 1}`} id={`DNI${i + 1}`} type="text" />
                 <!-- Agrega más campos según sea necesario -->
+                <label for={`sexo${i + 1}`}>Sexo</label>
+                <select id={`sexo${i + 1}`}>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <!-- Agrega más opciones según sea necesario -->
+                </select>
             </div>
         {/each}
     {/if}

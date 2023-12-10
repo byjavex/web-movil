@@ -37,6 +37,10 @@
     import { onMount } from 'svelte';
     //import { numAcompanantes } from '$routes/Acompanante.svelte';
 
+    import {afterUpdate} from "svelte";
+
+
+
     let numAcompanantesValue = 0; // Variable local para almacenar el valor actual de numAcompanantes
 
 
