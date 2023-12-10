@@ -35,9 +35,9 @@
     import { browser } from "$app/environment";
     import Acompanante from "./Acompanante.svelte";
     import { onMount } from 'svelte';
-    import { numAcompanantes } from '$routes/Acompanante.svelte';
+    //import { numAcompanantes } from '$routes/Acompanante.svelte';
 
-    let numAcompanantesValue = numAcompanantes; // Variable local para almacenar el valor actual de numAcompanantes
+    let numAcompanantesValue = 0; // Variable local para almacenar el valor actual de numAcompanantes
 
 
 

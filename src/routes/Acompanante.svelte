@@ -24,19 +24,19 @@
 
 <!-- Acompanante.svelte -->
 
-<script>
-    import { writable } from 'svelte/store'
+<script >
+
     import Inputs from "./Inputs.svelte";
     // Crea un store writable para almacenar el número de acompañantes
-    export const numAcompanantes = writable(0);
+    let numAcompanantes = 0
 
     // Función para agregar campos de acompañante dinámicamente
     function agregarAcompanante() {
-        $numAcompanantes.update(n => n + 1);  // Incrementa el valor del store
+        numAcompanantes+=1;  // Incrementa el valor del store
     }
 
     function eliminarAcompanante() {
-        $numAcompanantes.update(n => n - 1);  // Decrementa el valor del store
+        numAcompanantes-=1;  // Decrementa el valor del store
     }
 </script>
 
@@ -48,11 +48,10 @@
         {#each Array(numAcompanantes) as _, i}
             <div>
                 <h3>Acompañante {i + 1}</h3>
-                <Inputs name={`Nombre${i}`} id={`Nombre${i}`} type="text"  />
-                <Inputs name={`Apellidos${i}`} id={`Apellidos${i}`} type="text"  />
-                <Inputs name={`DNI${i}`} id={`DNI${i}`} type="text"  />
+                <Inputs name={`Nombre del acompañante ${i + 1}`} id={`Nombre${i + 1}`} type="text" />
+                <Inputs name={`Apellidos del acompañante ${i + 1}`} id={`Apellidos${i + 1}`} type="text" />
+                <Inputs name={`DNI del acompañante ${i + 1}`} id={`DNI${i + 1}`} type="text" />
                 <!-- Agrega más campos según sea necesario -->
-
             </div>
         {/each}
     {/if}
