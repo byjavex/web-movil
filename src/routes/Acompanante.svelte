@@ -14,7 +14,9 @@
     }
 
     function eliminarAcompanante() {
-        numAcompanantes-=1;  // Decrementa el valor del store
+        if (numAcompanantes > 0) {
+            numAcompanantes -= 1;  // Decrementa el valor del store
+        }
     }
 </script>
 
