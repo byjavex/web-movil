@@ -136,6 +136,7 @@
                         fechaExpedicion: document.getElementById('fecha_Expedicion').value,
                         parcela: document.getElementById('parcela').value,
                         luz: document.getElementById('Luz').checked,
+                        pais: document.getElementById('Pais').value,
                         Ncliente: NumAcompanante
                     }
                 };
@@ -198,6 +199,7 @@
         <!-- Campos con información general -->
         <Inputs name="DNI" id="DNI" type="text" />
         <Inputs name="Ciudad" id="Ciudad" type="text" />
+        <Inputs name="Pais" id="Pais" type="text" />
         <Inputs name="Email" id="Email" type="text" />
         <Inputs name="Dirección" id="Direccion" type="text" />
         <Inputs name="Telefono" id="Telefono" type="text" />
