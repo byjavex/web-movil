@@ -24,19 +24,70 @@
     export let name, id, type, requerido = true;
 
     // Variable para almacenar el valor del campo de entrada.
-    let inputvalue ='';
+    let inputvalue = '';
 
     // Función para manejar el evento de cambio en el campo de entrada.
+    // Función para manejar el evento de cambio en el campo de entrada.
     function handleinputvalue(event){
-        // Almacena el valor del campo de entrada.
-        inputvalue = event.target.value;
+        // Verifica si el tipo del campo es 'date'
+        if (type !== 'date') {
+            // Almacena el valor del campo de entrada.
+            inputvalue = event.target.value;
+
+            // Realiza la validación para evitar valores no permitidos
+            const forbiddenValues = ["select", "from", "where","=","or","and","*","-"];
+
+            // Convierte la cadena a minúsculas antes de la comparación
+            const lowercaseInput = inputvalue.toLowerCase();
+
+            // Verifica si alguna de las palabras prohibidas está presente en la cadena
+            if (forbiddenValues.some(value => lowercaseInput.includes(value))) {
+                // Borra el contenido del campo si se encuentra una palabra no permitida
+                inputvalue = '';
+                event.target.value = '';
+                console.log("Se detectó una palabra no permitida. Contenido borrado.");
+            }
+        }
 
         // Muestra en la consola el valor del campo de entrada si no está vacío.
-        if (inputvalue !=='') {
+        if (inputvalue !== '' || type === 'date') {
             console.log(inputvalue);
         }
     }
 
+
+    // Variable para almacenar el mensaje de error para Matricula
+    let matriculaError = '';
+
+    // Función para manejar el evento de cambio en el campo de Matricula
+    function handleMatricula(event) {
+        // Almacena el valor del campo de entrada.
+        inputvalue = event.target.value;
+
+        // Verifica si la matrícula sigue el formato correcto (4 dígitos seguidos de 3 caracteres)
+        const formatoCorrecto = /^[0-9]{4}[a-zA-Z]{3}$/.test(inputvalue);
+
+        // Muestra un mensaje de error si el formato no es correcto.
+        if (!formatoCorrecto) {
+            matriculaError = 'La matrícula debe seguir el formato: 1234ABC';
+            // Borra el contenido del campo de Matrícula cuando aparece el mensaje de error.
+            inputvalue = '';
+            // Vaciar visualmente el campo de matrícula al encontrar un error
+            document.getElementById('Matricula').value = '';
+        } else {
+            // Convertir las últimas tres letras a mayúsculas si están en minúsculas
+            const ultimasTresLetras = inputvalue.slice(-3);
+            const ultimasTresLetrasMayusculas = ultimasTresLetras.toUpperCase();
+            inputvalue = inputvalue.slice(0, -3) + ultimasTresLetrasMayusculas;
+            document.getElementById('Matricula').value = inputvalue.slice(0, -3) + ultimasTresLetrasMayusculas;
+
+            matriculaError = ''; // Restablece el mensaje de error si el formato es correcto.
+            // Muestra en la consola el valor del campo de Matrícula si no está vacío.
+            if (inputvalue !== '') {
+                console.log(inputvalue);
+            }
+        }
+    }
 
     function getFechaActual() {
         const today = new Date();
@@ -50,24 +101,25 @@
 
         return `${year}-${month}-${day}`;
     }
-
-
 </script>
 
 <!-- Campo de entrada -->
-{#if requerido == true}
+{#if requerido === true}
     {#if type === 'date' && id === 'fecha_Entrada'}
         <input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name} required value={getFechaActual()}>
-    {:else }
-        <input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name} required>
+    {:else if (type === 'text' && id === 'Matricula')}
+        <input id={id} type={type} on:blur={handleMatricula} name={name} placeholder={name} required maxlength={7} on:input={e => inputvalue = e.target.value}>
+        {#if matriculaError}
+            <p style="color: red; text-align: center;">{matriculaError}</p>
+        {/if}
+    {:else if (type === 'text' && id === 'DNI')}
+        <input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name} required maxlength={9} on:input={e => inputvalue = e.target.value}>
+    {:else}
+        <input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name} required maxlength={type === 'text' ? 50 : 10} on:input={e => inputvalue = e.target.value}>
     {/if}
-{:else }
-    <input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name}>
+{:else}
+    <input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name} maxlength={type === 'text' ? 50 : 10} on:input={e => inputvalue = e.target.value}>
 {/if}
-
-
-
-
 
 <style>
     /* Estilos para todos los campos de entrada */
@@ -97,7 +149,7 @@
     }
 
     /* Estilos específicos para campos de tipo 'date' */
-    input[type='date']{
+    input[type='date'] {
         box-sizing: border-box;
         margin-bottom: 10px;
         margin-left: auto;
@@ -110,14 +162,13 @@
         transition: box-shadow 0.3s ease;
     }
 
-
-    input[type='submit']{
+    input[type='submit'] {
         width: fit-content;
         padding: 10px 20px;
         font-size: 13px;
         background-color: #5bcc26; /* Color de fondo */
         color: #000000; /* Color de texto */
-        border: solid   black; /* Sin borde */
+        border: solid black; /* Sin borde */
         border-radius: 30px; /* Bordes redondeados */
         display: block; /* Hace que el botón sea un bloque para poder aplicar márgenes automáticos */
         margin: 10px auto; /* Centra el botón horizontalmente */

@@ -11,7 +11,7 @@
     - Un botón de envío para procesar y enviar el formulario.
 
     Conexión WebSocket:
-    - Se establece una conexión WebSocket con un servidor en la dirección 'ws://192.168.1.96:9500/' al cargar la página.
+    - Se establece una conexión WebSocket con un servidor en la dirección 'ws://10.182.122.193:9500/' al cargar la página.
     - Se manejan eventos de apertura y cierre de la conexión para informar al usuario sobre el estado de la conexión.
 
     Envío de formulario:
@@ -35,14 +35,8 @@
     import { browser } from "$app/environment";
     import Acompanante from "./Acompanante.svelte";
 
-
-
     // Crea una variable reactiva para almacenar el valor del store
     let numAcompanantesValue = 0;
-
-
-
-
 
     // Inicialización de variables y conexión WebSocket
     let socket;
@@ -50,7 +44,7 @@
 
     if (browser) {
         // Establecimiento de la conexión WebSocket al cargar la página
-        socket = new WebSocket('ws://10.182.122.193:9500/');
+        socket = new WebSocket('ws://http://192.168.1.96:5173/');
 
         // Manejo del evento de cierre de la conexión
         socket.onclose = function () {
@@ -66,12 +60,13 @@
         }
     }
 
-
+    // Función para agregar un acompañante
     function agregarAcompanante() {
         numAcompanantesValue += 1;
-        console.log(numAcompanantesValue+" fuera")
+       // console.log(numAcompanantesValue + " fuera")
     }
 
+    // Función para eliminar un acompañante
     function eliminarAcompanante() {
         // Verifica si hay acompañantes antes de mostrar el mensaje de confirmación
         if (numAcompanantesValue > 0) {
@@ -84,55 +79,96 @@
     }
 
     // Objeto para almacenar datos del formulario
-    let formData = {};
 
     // Función para enviar el formulario
-    function enviarFormulario() {
-        // Verificación de la selección de parcela antes de enviar los datos
-        if (document.getElementById('parcela').value !== '-') {
-            // Recopilación de datos de los campos del formulario
-            let NumAcompanante = numAcompanantesValue
-            formData = {
-                cliente: {
-                    nombre: document.getElementById('Nombre').value,
-                    apellidos: document.getElementById('Apellidos').value,
-                    dni: document.getElementById('DNI').value,
-                    ciudad: document.getElementById('Ciudad').value,
-                    email: document.getElementById('Email').value,
-                    direccion: document.getElementById('Direccion').value,
-                    telefono: document.getElementById('Telefono').value,
-                    matricula: document.getElementById('Matricula').value,
-                    fechaEntrada: document.getElementById('fecha_Entrada').value,
-                    fechaNacimiento: document.getElementById('fecha_Nacimiento').value,
-                    fechaExpedicion: document.getElementById('fecha_Expedicion').value,
-                    parcela: document.getElementById('parcela').value,
-                    luz: document.getElementById('Luz').checked,
-                    Ncliente: NumAcompanante
-                }
-            };
-            if (NumAcompanante> 0) {
-                for (let i = 0; i < NumAcompanante; i++) {
-                    formData["Acompanante" + i] = {
-                        nombre: document.getElementById('Nombre' + i).value,
-                        apellidos: document.getElementById('Apellidos' + i).value,
-                        dni: document.getElementById('DNI' + i).value,
-                        tipo_documento: document.getElementById('Documento' + i).value,
-                        sexo: document.getElementById('Sexo' + i).value
-                    };
+    async function enviarFormulario() {
+        // Verifica si hay conexión antes de intentar enviar los datos
+        if (isConnected) {
+            // Intenta reconectar al servidor WebSocket
+            let intentos = 0;
+            const maxIntentos = 3;
+
+            while (!isConnected && intentos < maxIntentos) {
+                try {
+                    // Intenta abrir la conexión WebSocket
+                    await new Promise(resolve => setTimeout(resolve, 1000)); // Espera 1 segundo antes de intentar la reconexión
+                    socket = new WebSocket('ws://192.168.1.96:5173/');
+                    intentos++;
+
+                    // Espera a que la conexión se abra
+                    await new Promise((resolve, reject) => {
+                        socket.addEventListener('open', resolve);
+                        socket.addEventListener('error', reject);
+                    });
+
+                    isConnected = true;
+                    console.log("Conectado al servidor WebSocket después de reconexión");
+                } catch (error) {
+                    console.error("Error al intentar reconectar:", error);
                 }
             }
-            // Muestra una alerta indicando que el formulario ha sido enviado.
-            alert("Formulario enviado");
-            // Registra en la consola un mensaje indicando que el formulario ha sido enviado.
-            console.log(formData);
-            // Envío de los datos del formulario al servidor a través de la conexión WebSocket
-            socket.send(JSON.stringify(formData));
+
+            // Si después de los intentos no se logra la conexión, muestra un aviso
+            if (!isConnected) {
+                alert("No se pudo establecer conexión con el servidor después de varios intentos. Inténtelo de nuevo más tarde.");
+                return;
+            }
+
+            // Recopilación de datos de los campos del formulario
+            if (document.getElementById('parcela') !== '-') {
+                let formData = {};
+                let NumAcompanante = numAcompanantesValue
+                formData = {
+                    cliente: {
+                        nombre: document.getElementById('Nombre').value,
+                        apellidos: document.getElementById('Apellidos').value,
+                        sexo: document.getElementById('sexo').value,
+                        tipo_documento: document.getElementById('Documento').value,
+                        dni: document.getElementById('DNI').value,
+                        ciudad: document.getElementById('Ciudad').value,
+                        email: document.getElementById('Email').value,
+                        direccion: document.getElementById('Direccion').value,
+                        telefono: document.getElementById('Telefono').value,
+                        tipo_vehiculo: document.getElementById("vehiculo").value,
+                        matricula: document.getElementById('Matricula').value,
+                        fechaEntrada: document.getElementById('fecha_Entrada').value,
+                        fechaNacimiento: document.getElementById('fecha_Nacimiento').value,
+                        fechaExpedicion: document.getElementById('fecha_Expedicion').value,
+                        parcela: document.getElementById('parcela').value,
+                        luz: document.getElementById('Luz').checked,
+                        Ncliente: NumAcompanante
+                    }
+                };
+                if (NumAcompanante > 0) {
+                    for (let i = 1; i <= NumAcompanante; i++) {
+                        formData["Acompanante" + i] = {
+                            nombre: document.getElementById('Nombre' + i).value,
+                            apellidos: document.getElementById('Apellidos' + i).value,
+                            dni: document.getElementById('DNI' + i).value,
+                            tipo_documento: document.getElementById('Documento' + i).value,
+                            sexo: document.getElementById('Sexo' + i).value,
+                            fechaNacimiento: document.getElementById('fecha_Nacimiento' + i).value
+                        };
+                    }
+                }
+
+                // Muestra una alerta indicando que el formulario ha sido enviado.
+                alert("Formulario enviado");
+                // Registra en la consola un mensaje indicando que el formulario ha sido enviado.
+                console.log(formData);
+                // Envío de los datos del formulario al servidor a través de la conexión WebSocket
+                socket.send(JSON.stringify(formData));
+            } else {
+                alert("No ha seleccionado parcela");
+            }
+
         } else {
-            // Alerta si no se ha seleccionado una parcela
-            alert("Datos no enviados, no ha seleccionado parcela");
+            alert("No hay conexión al servidor. Inténtelo de nuevo más tarde.");
         }
     }
+
 </script>
+
 
 <body>
 <!-- Contenedor principal del formulario -->
@@ -140,14 +176,38 @@
     <!-- Formulario con campos de entrada, selectores y botones -->
     <form on:submit={enviarFormulario}>
         <h2>Cliente principal</h2>
+
         <!-- Campos de Entrada -->
         <Inputs name="Nombre" id="Nombre" type="text" />
         <Inputs name="Apellidos" id="Apellidos" type="text" />
+
+        <!-- Selector para el campo 'sexo' -->
+        <label for={`sexo`}>Sexo</label>
+        <select id={`sexo`}>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+        </select>
+
+        <!-- Selector para el campo 'Documento' -->
+        <label for={`Documento`}>Documento</label>
+        <select id={`Documento`}>
+            <option value="DNI">DNI</option>
+            <option value="Pasaporte">Pasaporte</option>
+        </select>
+
+        <!-- Campos con información general -->
         <Inputs name="DNI" id="DNI" type="text" />
         <Inputs name="Ciudad" id="Ciudad" type="text" />
         <Inputs name="Email" id="Email" type="text" />
         <Inputs name="Dirección" id="Direccion" type="text" />
         <Inputs name="Telefono" id="Telefono" type="text" />
+
+        <label for={`vehiculo`}>Tipo de vehículo</label>
+        <select id={`vehiculo`}>
+            <option value="Autocaravana">Autocaravana</option>
+            <option value="Caravana">Caravana</option>
+            <option value="Camper">Camper</option>
+        </select>
         <Inputs name="Matricula" id="Matricula" type="text" />
 
         <!-- Campos de Fecha -->
@@ -156,22 +216,20 @@
         <label for="fecha_Expedicion">Fecha expedición <Inputs name="fecha Expedicion" id="fecha_Expedicion" type="date" /></label>
 
         <!-- Contenedor para Selector, Botón de Luz y Componente de Envío -->
-        <div id="con">
-            <Selector name="parcela" />
-
+        <div id="con" >
+            <Selector name="parcela"  />
             <Boton_luz />
         </div>
 
-        <!-- Llama al componente Acompañante si Comprobacion es true   -->
-
+        <div style="padding-bottom: 22px"></div> <!-- Separa el boton de luz de los acompañantes -->
         <Acompanante numAcompanantes={numAcompanantesValue} />
 
         <!-- Botón para agregar acompañante -->
-        <button id = "agregar" type="button" on:click={agregarAcompanante}>Agregar Acompañante</button>
+        <button id="agregar" type="button" on:click={agregarAcompanante}>Agregar Acompañante</button>
 
         <!-- Botón para eliminar acompañante, solo si hay acompañantes -->
         {#if numAcompanantesValue > 0}
-            <button id = "eliminar" type="button" on:click={eliminarAcompanante}>Eliminar Acompañante</button>
+            <button id="eliminar" type="button" on:click={eliminarAcompanante}>Eliminar Acompañante</button>
         {/if}
 
         <!-- Botón de envío del formulario -->
@@ -181,25 +239,38 @@
 </body>
 
 
-
 <style>
     /* Estilos generales para el formulario principal */
     .main {
         padding-top: 20px;
     }
+    label {
+        margin-right: 10px;
+        margin-left: 10%;
+    }
+
 
 
 
     /* Ajuste de tamaño de fuente para mejorar la legibilidad de las etiquetas */
     label {
+        margin-right: 4px;
+        margin-left: 10%;
+
         font-size: 12px;
+        display: inline;
+
     }
 
     h2{
         padding-bottom: 10px;
     }
 
-
+    button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     #agregar{
 
         padding: 10px 10px;
@@ -220,6 +291,14 @@
         border: solid   black; /* Sin borde */
         border-radius: 30px; /* Bordes redondeados */
         display: inline-block;
+    }
+
+    /* Estilo para el select */
+    select {
+        padding: 5px;
+        border: 1px solid #000000;
+        border-radius: 4px;
+        cursor: pointer;
     }
 </style>
 
