@@ -40,24 +40,24 @@
 
     // Inicialización de variables y conexión WebSocket
     let socket;
-    let isConnected = false;
+    let isConnected = true;  // !!!!!!!!!!!!!!!ESTO HAY QUE CAMBIARLO , PARA LA PRUEBA DEL DIA 13 ESTÁ BIEN ASI
 
     if (browser) {
         // Establecimiento de la conexión WebSocket al cargar la página
-        socket = new WebSocket("ws://http://192.168.1.96:5173/");
+        socket = new WebSocket('ws://localhost:5173/');
 
         // Manejo del evento de cierre de la conexión
         socket.onclose = function () {
             isConnected = false;
             console.log("Desconectado del servidor WebSocket");
             alert("No se puede conectar con el servidor, recargue la página");
-        };
+        }
 
         // Manejo del evento de apertura de la conexión
         socket.onopen = function () {
             isConnected = true;
             console.log("Conectado al servidor WebSocket");
-        };
+        }
     }
 
     // Función para agregar un acompañante
@@ -70,9 +70,7 @@
     function eliminarAcompanante() {
         // Verifica si hay acompañantes antes de mostrar el mensaje de confirmación
         if (numAcompanantesValue > 0) {
-            const confirmacion = window.confirm(
-                "¿Estás seguro de eliminar el acompañante?",
-            );
+            const confirmacion = window.confirm("¿Estás seguro de eliminar el acompañante?");
 
             if (confirmacion && numAcompanantesValue > 0) {
                 numAcompanantesValue -= 1;
@@ -93,20 +91,18 @@
             while (!isConnected && intentos < maxIntentos) {
                 try {
                     // Intenta abrir la conexión WebSocket
-                    await new Promise((resolve) => setTimeout(resolve, 1000)); // Espera 1 segundo antes de intentar la reconexión
-                    socket = new WebSocket("ws://192.168.1.96:5173/");
+                    await new Promise(resolve => setTimeout(resolve, 1000)); // Espera 1 segundo antes de intentar la reconexión
+                    socket = new WebSocket('ws://localhost:5173/');
                     intentos++;
 
                     // Espera a que la conexión se abra
                     await new Promise((resolve, reject) => {
-                        socket.addEventListener("open", resolve);
-                        socket.addEventListener("error", reject);
+                        socket.addEventListener('open', resolve);
+                        socket.addEventListener('error', reject);
                     });
 
                     isConnected = true;
-                    console.log(
-                        "Conectado al servidor WebSocket después de reconexión",
-                    );
+                    console.log("Conectado al servidor WebSocket después de reconexión");
                 } catch (error) {
                     console.error("Error al intentar reconectar:", error);
                 }
@@ -114,57 +110,45 @@
 
             // Si después de los intentos no se logra la conexión, muestra un aviso
             if (!isConnected) {
-                alert(
-                    "No se pudo establecer conexión con el servidor después de varios intentos. Inténtelo de nuevo más tarde.",
-                );
+                alert("No se pudo establecer conexión con el servidor después de varios intentos. Inténtelo de nuevo más tarde.");
                 return;
             }
 
             // Recopilación de datos de los campos del formulario
-            if (document.getElementById("parcela") !== "-") {
+            if (document.getElementById('parcela').value !== '-') {
                 let formData = {};
-                let NumAcompanante = numAcompanantesValue;
+                let NumAcompanante = numAcompanantesValue
                 formData = {
                     cliente: {
-                        nombre: document.getElementById("Nombre").value,
-                        apellidos: document.getElementById("Apellidos").value,
-                        sexo: document.getElementById("sexo").value,
-                        tipo_documento:
-                            document.getElementById("Documento").value,
-                        dni: document.getElementById("DNI").value,
-                        ciudad: document.getElementById("Ciudad").value,
-                        email: document.getElementById("Email").value,
-                        direccion: document.getElementById("Direccion").value,
-                        telefono: document.getElementById("Telefono").value,
-                        tipo_vehiculo:
-                            document.getElementById("vehiculo").value,
-                        matricula: document.getElementById("Matricula").value,
-                        fechaEntrada:
-                            document.getElementById("fecha_Entrada").value,
-                        fechaNacimiento:
-                            document.getElementById("fecha_Nacimiento").value,
-                        fechaExpedicion:
-                            document.getElementById("fecha_Expedicion").value,
-                        parcela: document.getElementById("parcela").value,
-                        luz: document.getElementById("Luz").checked,
-                        pais: document.getElementById("Pais").value,
-                        Ncliente: NumAcompanante,
-                    },
+                        nombre: document.getElementById('Nombre').value,
+                        apellidos: document.getElementById('Apellidos').value,
+                        sexo: document.getElementById('sexo').value,
+                        tipo_documento: document.getElementById('Documento').value,
+                        dni: document.getElementById('DNI').value,
+                        ciudad: document.getElementById('Ciudad').value,
+                        email: document.getElementById('Email').value,
+                        direccion: document.getElementById('Direccion').value,
+                        telefono: document.getElementById('Telefono').value,
+                        tipo_vehiculo: document.getElementById('vehiculo').value,
+                        matricula: document.getElementById('Matricula').value,
+                        fechaEntrada: document.getElementById('fecha_Entrada').value,
+                        fechaNacimiento: document.getElementById('fecha_Nacimiento').value,
+                        fechaExpedicion: document.getElementById('fecha_Expedicion').value,
+                        parcela: document.getElementById('parcela').value,
+                        luz: document.getElementById('Luz').checked,
+                        pais: document.getElementById('Pais').value,
+                        Ncliente: NumAcompanante
+                    }
                 };
                 if (NumAcompanante > 0) {
                     for (let i = 1; i <= NumAcompanante; i++) {
                         formData["Acompanante" + i] = {
-                            nombre: document.getElementById("Nombre" + i).value,
-                            apellidos: document.getElementById("Apellidos" + i)
-                                .value,
-                            dni: document.getElementById("DNI" + i).value,
-                            tipo_documento: document.getElementById(
-                                "Documento" + i,
-                            ).value,
-                            sexo: document.getElementById("Sexo" + i).value,
-                            fechaNacimiento: document.getElementById(
-                                "fecha_Nacimiento" + i,
-                            ).value,
+                            nombre: document.getElementById(`Nombre`+i ).value,
+                            apellidos: document.getElementById('Apellidos'+i).value,
+                            dni: document.getElementById('DNI' + i).value,
+                            tipo_documento: document.getElementById('Documento' + i).value,
+                            sexo: document.getElementById('Sexo' + i).value,
+                            fechaNacimiento: document.getElementById('fecha_Nacimiento' + i).value
                         };
                     }
                 }
@@ -177,12 +161,17 @@
                 socket.send(JSON.stringify(formData));
             } else {
                 alert("No ha seleccionado parcela");
+                return;
             }
+
         } else {
             alert("No hay conexión al servidor. Inténtelo de nuevo más tarde.");
+            return;
         }
     }
+
 </script>
+
 
 <body>
     <!-- Contenedor principal del formulario -->
@@ -209,8 +198,8 @@
 
                 <!-- Selector para el campo 'Documento' -->
                 <div>
-                    <label for={`Documento`}>Documento</label>
-                    <select id={`Documento`}>
+                    <label for="Documento">Documento</label>
+                    <select id="Documento">
                         <option value="DNI">DNI</option>
                         <option value="Pasaporte">Pasaporte</option>
                     </select>
@@ -230,10 +219,10 @@
                 <Inputs name="Dirección" id="Direccion" type="text" />
                 <Inputs name="Telefono" id="Telefono" type="text" />
 
-                <label for={`vehiculo`}>Tipo vehículo</label>
+                <label for="vehiculo">Tipo vehículo</label>
                 <label for="Matricula">Matrícula:</label>
-                <select id={`vehiculo`}>
-                    <option value="Autocaravana">Autocaravana</option>
+                <select id="vehiculo">
+                    <option value="Autocaravana">Auto</option>
                     <option value="Caravana">Caravana</option>
                     <option value="Camper">Camper</option>
                 </select>
@@ -243,7 +232,7 @@
                 <label for="fecha_Entrada">Fecha entrada</label>
                 <label for="fecha_Nacimiento">Fecha nacimiento</label>
                 <Inputs name="fecha Entrada" id="fecha_Entrada" type="date" />
-                <Inputs name="fecha Nacimiento" id="fecha_Nacimiento" type="date" />
+                <Inputs name="fecha Nacimiento" id="fecha_Nacimiento"  type="date" />
                 <div>
                     <label for="fecha_Expedicion">Fecha expedición </label>
                     <Inputs name="fecha Expedicion" id="fecha_Expedicion" type="date"/>
@@ -318,37 +307,32 @@
         display: grid;
         grid-template-rows: 1fr 1fr;
     }
-    
-    #agregar {
-        padding: 12px 20px;
-        font-size: 18px;
-        background-color: #4CAF50; /* Verde */
-        color: #ffffff; /* Texto en color blanco para mayor contraste */
-        border: 2px solid #2d862d; /* Borde verde oscuro */
-        border-radius: 25px; /* Bordes redondeados */
-        display: inline-block;
-        margin-left: 110px; /* Ajuste del margen izquierdo */
-        margin-bottom: 5px;
-        margin-top: 15px;
-        width: 218px; /* Ancho específico */
-        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Agrega transiciones para una experiencia más suave */
-}
 
+    #agregar,
     #eliminar {
         padding: 12px 20px;
         font-size: 18px;
-        background-color: #e74c3c; /* Rojo */
-        color: #ffffff; /* Texto en color blanco para mayor contraste */
-        border: 2px solid #c0392b; /* Borde rojo oscuro */
-        border-radius: 25px; /* Bordes redondeados */
         display: inline-block;
-        margin-left: 110px; /* Ajuste del margen izquierdo */
-        margin-bottom: 15px;
-        margin-top: 5px;
-        width: 218px; /* Ancho específico */
-        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Agrega transiciones para una experiencia más suave */
+        width: 218px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        margin-bottom: 10px; /* Ajusta según sea necesario */
+        border-radius: 50px;
+        color: white;
+    }
+
+    #agregar {
+        background-color: #4CAF50;
+        border: 2px solid #000000;
+        margin-left: 50%; /* Centra el botón "Agregar Acompañante" */
+        transform: translateX(-50%); /* Centra el botón correctamente */
+    }
+
+    #eliminar {
+        background-color: #e74c3c;
+        border: 2px solid #000000;
+        margin-left: 50%; /* Centra el botón "Eliminar Acompañante" */
+        transform: translateX(-50%); /* Centra el botón correctamente */
     }
 
     /* Estilo para el select */
@@ -361,5 +345,21 @@
         font-family: Helvetica, sans-serif;
         margin-bottom: 10px;
     }
+    /* Estilo para el select de vehículo */
+    #vehiculo {
+        padding: 5px;
+        border: 1px solid #000000;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        font-family: Helvetica, sans-serif;
+        margin: 10px 0 10px 11% ;
+        width: 150px; /* Puedes ajustar el valor según tus necesidades */
+        height: 25px; /* Puedes ajustar el valor según tus necesidades */
+    }
+
+
+
+
 
 </style>

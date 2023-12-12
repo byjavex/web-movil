@@ -107,11 +107,6 @@
 {#if requerido === true}
     {#if type === 'date' && id === 'fecha_Entrada'}
         <input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name} required value={getFechaActual()}>
-    {:else if (type === 'text' && id === 'Matricula')}
-        <input id={id} type={type} on:blur={handleMatricula} name={name} placeholder={name} required maxlength={7} on:input={e => inputvalue = e.target.value}>
-        {#if matriculaError}
-            <p style="color: red; text-align: center;">{matriculaError}</p>
-        {/if}
     {:else if (type === 'text' && id === 'DNI')}
         <input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name} required maxlength={9} on:input={e => inputvalue = e.target.value}>
     {:else}
@@ -120,6 +115,8 @@
 {:else}
     <input id={id} type={type} on:blur={handleinputvalue} name={name} placeholder={name} maxlength={type === 'text' ? 50 : 10} on:input={e => inputvalue = e.target.value}>
 {/if}
+
+
 
 <style>
     /* Estilos para todos los campos de entrada */

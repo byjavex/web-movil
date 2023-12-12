@@ -37,18 +37,18 @@
                     <!-- Campos de entrada para Nombre y Apellidos del acompañante -->
                     <label for="Nombre">Nombre:</label>
                     <label for="Apellidos">Apellidos:</label>
-                    <Inputs name={`Nombre del acompañante ${i + 1}`} id={`Nombre${i + 1}`} type="text" />
-                    <Inputs name={`Apellidos del acompañante ${i + 1}`} id={`Apellidos${i + 1}`} type="text" />
-    
+                    <Inputs name={`Nombre ${i + 1}`} id={`Nombre${i + 1}`} type="text" />
+                    <Inputs name={`Apellidos ${i + 1}`} id={`Apellidos${i + 1}`} type="text" />
+
                     <!-- Selector de Sexo del acompañante -->
                     <div>
-                        <label for={`sexo${i + 1}`}>Sexo</label>
-                        <select id={`sexo${i + 1}`}>
+                        <label for={`Sexo${i + 1}`}>Sexo</label>
+                        <select id={`Sexo${i + 1}`}>
                             <option value="Masculino">Masculino</option>
                             <option value="Femenino">Femenino</option>
                         </select>
                     </div>
-    
+
                     <!-- Selector de Tipo de Documento del acompañante -->
                     <div>
                         <label for={`Documento${i + 1}`}>Documento</label>
@@ -57,16 +57,16 @@
                             <option value="Pasaporte">Pasaporte</option>
                         </select>
                     </div>
-    
+
                     <!-- Campo de entrada para el Número de Documento del acompañante -->
                     <label for="DNI">DNI:</label>
                     <label for="fecha_Nacimiento">Fecha nacimiento</label>
                     <Inputs name={`Número documento del acompañante ${i + 1}`} id={`DNI${i + 1}`} type="text" />
-    
+
                     <!-- Etiqueta y campo de fecha de nacimiento del acompañante -->
-                    <Inputs name="fecha Nacimiento" id={`fecha_Nacimiento${i + 1}`} type="date" requerido=false/>
+                    <Inputs name="fecha Nacimiento" id={`fecha_Nacimiento${i + 1}`} type="date" requerido=false />
                 </div>
-                
+
             </div>
         {/each}
     {/if}
