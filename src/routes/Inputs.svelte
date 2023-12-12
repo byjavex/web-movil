@@ -123,54 +123,68 @@
 
 <style>
     /* Estilos para todos los campos de entrada */
-    input {
-        box-sizing: border-box;
-        margin-bottom: 10px;
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-        border: 2px solid #000000;
-        border-radius: 4px;
-        width: 80%;
-        padding: 8px;
-        transition: box-shadow 0.3s ease;
-    }
+input {
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    width: 80%;
+    padding: 12px;
+    transition: box-shadow 0.3s ease;
+    font-family: 'Helvetica', sans-serif;
+    background-color: #ffffff; /* Color de fondo blanco */
+}
 
-    /* Estilos para campos de entrada cuando están enfocados */
-    input:focus {
-        outline: none;
-        box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
-    }
+/* Estilos para campos de entrada cuando están enfocados */
+input:focus {
+    outline: none;
+    border-color: #007bff; /* Borde de color azul al enfocar */
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+}
 
-    /* Estilos para campos de entrada que no están enfocados */
-    input:not(:focus) {
-        background-color: #e3e3e3;
-        transition: background-color 0.3s ease, opacity 0.3s ease;
-    }
+/* Estilos para campos de entrada que no están enfocados */
+input:not(:focus) {
+    background-color: #f5f5f5; /* Fondo gris claro cuando no está enfocado */
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
 
     /* Estilos específicos para campos de tipo 'date' */
     input[type='date'] {
         box-sizing: border-box;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
         margin-left: auto;
         margin-right: auto;
         display: block;
         border: 2px solid #000000;
-        border-radius: 4px;
+        border-radius: 8px;
         width: 80%;
-        padding: 8px;
+        padding: 12px;
         transition: box-shadow 0.3s ease;
+        font-family: 'Helvetica', sans-serif;
+        background-color: #ffffff; /* Color de fondo blanco */
+        position: relative;
     }
+    /* Estilos para campos de entrada de tipo 'date' cuando están enfocados */
+    input[type='date']:focus {
+        outline: none;
+        border-color: #007bff; /* Borde de color azul al enfocar */
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+    }   
 
     input[type='submit'] {
         width: fit-content;
-        padding: 10px 20px;
-        font-size: 13px;
-        background-color: #5bcc26; /* Color de fondo */
-        color: #000000; /* Color de texto */
-        border: solid black; /* Sin borde */
-        border-radius: 30px; /* Bordes redondeados */
+        padding: 12px 24px;
+        font-size: 16px;
+        background-color: #4CAF50; /* Verde */
+        color: #ffffff; /* Texto en color blanco para mayor contraste */
+        border: 2px solid #2d862d; /* Borde verde oscuro */
         display: block; /* Hace que el botón sea un bloque para poder aplicar márgenes automáticos */
         margin: 10px auto; /* Centra el botón horizontalmente */
+        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Agrega transiciones para una experiencia más suave */
     }
 </style>

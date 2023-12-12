@@ -42,11 +42,18 @@
         display: flex;
         align-items: center;
         margin-bottom: 10px; /* Ajusta según sea necesario */
+        margin-top: 10px;
     }
 
     label {
         margin-right: 10px;
-        margin-left: 10%;
+        margin-left: 35px;
+    }
+    
+    span{
+        font-family: Helvetica, sans-serif;
+        font-weight: bold;
+        
     }
 
     /* Estilo del texto "Luz" */

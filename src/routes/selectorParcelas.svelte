@@ -85,13 +85,18 @@
     label {
         margin-right: 10px;
         margin-left: 10%;
+        font-family: Helvetica, sans-serif;
+        font-weight: bold;
     }
 
     /* Estilo para el select */
     select {
-        padding: 8px;
-        border: 1px solid #ccc;
+        padding: 5px;
+        border: 1px solid #000000;
         border-radius: 4px;
         cursor: pointer;
+        font-size: 12px;
+        font-family: Helvetica, sans-serif;
+        margin-top: 25px;
     }
 </style>

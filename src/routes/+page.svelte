@@ -44,33 +44,35 @@
 
     if (browser) {
         // Establecimiento de la conexión WebSocket al cargar la página
-        socket = new WebSocket('ws://http://192.168.1.96:5173/');
+        socket = new WebSocket("ws://http://192.168.1.96:5173/");
 
         // Manejo del evento de cierre de la conexión
         socket.onclose = function () {
             isConnected = false;
             console.log("Desconectado del servidor WebSocket");
             alert("No se puede conectar con el servidor, recargue la página");
-        }
+        };
 
         // Manejo del evento de apertura de la conexión
         socket.onopen = function () {
             isConnected = true;
             console.log("Conectado al servidor WebSocket");
-        }
+        };
     }
 
     // Función para agregar un acompañante
     function agregarAcompanante() {
         numAcompanantesValue += 1;
-       // console.log(numAcompanantesValue + " fuera")
+        // console.log(numAcompanantesValue + " fuera")
     }
 
     // Función para eliminar un acompañante
     function eliminarAcompanante() {
         // Verifica si hay acompañantes antes de mostrar el mensaje de confirmación
         if (numAcompanantesValue > 0) {
-            const confirmacion = window.confirm("¿Estás seguro de eliminar el acompañante?");
+            const confirmacion = window.confirm(
+                "¿Estás seguro de eliminar el acompañante?",
+            );
 
             if (confirmacion && numAcompanantesValue > 0) {
                 numAcompanantesValue -= 1;
@@ -91,18 +93,20 @@
             while (!isConnected && intentos < maxIntentos) {
                 try {
                     // Intenta abrir la conexión WebSocket
-                    await new Promise(resolve => setTimeout(resolve, 1000)); // Espera 1 segundo antes de intentar la reconexión
-                    socket = new WebSocket('ws://192.168.1.96:5173/');
+                    await new Promise((resolve) => setTimeout(resolve, 1000)); // Espera 1 segundo antes de intentar la reconexión
+                    socket = new WebSocket("ws://192.168.1.96:5173/");
                     intentos++;
 
                     // Espera a que la conexión se abra
                     await new Promise((resolve, reject) => {
-                        socket.addEventListener('open', resolve);
-                        socket.addEventListener('error', reject);
+                        socket.addEventListener("open", resolve);
+                        socket.addEventListener("error", reject);
                     });
 
                     isConnected = true;
-                    console.log("Conectado al servidor WebSocket después de reconexión");
+                    console.log(
+                        "Conectado al servidor WebSocket después de reconexión",
+                    );
                 } catch (error) {
                     console.error("Error al intentar reconectar:", error);
                 }
@@ -110,45 +114,57 @@
 
             // Si después de los intentos no se logra la conexión, muestra un aviso
             if (!isConnected) {
-                alert("No se pudo establecer conexión con el servidor después de varios intentos. Inténtelo de nuevo más tarde.");
+                alert(
+                    "No se pudo establecer conexión con el servidor después de varios intentos. Inténtelo de nuevo más tarde.",
+                );
                 return;
             }
 
             // Recopilación de datos de los campos del formulario
-            if (document.getElementById('parcela') !== '-') {
+            if (document.getElementById("parcela") !== "-") {
                 let formData = {};
-                let NumAcompanante = numAcompanantesValue
+                let NumAcompanante = numAcompanantesValue;
                 formData = {
                     cliente: {
-                        nombre: document.getElementById('Nombre').value,
-                        apellidos: document.getElementById('Apellidos').value,
-                        sexo: document.getElementById('sexo').value,
-                        tipo_documento: document.getElementById('Documento').value,
-                        dni: document.getElementById('DNI').value,
-                        ciudad: document.getElementById('Ciudad').value,
-                        email: document.getElementById('Email').value,
-                        direccion: document.getElementById('Direccion').value,
-                        telefono: document.getElementById('Telefono').value,
-                        tipo_vehiculo: document.getElementById("vehiculo").value,
-                        matricula: document.getElementById('Matricula').value,
-                        fechaEntrada: document.getElementById('fecha_Entrada').value,
-                        fechaNacimiento: document.getElementById('fecha_Nacimiento').value,
-                        fechaExpedicion: document.getElementById('fecha_Expedicion').value,
-                        parcela: document.getElementById('parcela').value,
-                        luz: document.getElementById('Luz').checked,
-                        pais: document.getElementById('Pais').value,
-                        Ncliente: NumAcompanante
-                    }
+                        nombre: document.getElementById("Nombre").value,
+                        apellidos: document.getElementById("Apellidos").value,
+                        sexo: document.getElementById("sexo").value,
+                        tipo_documento:
+                            document.getElementById("Documento").value,
+                        dni: document.getElementById("DNI").value,
+                        ciudad: document.getElementById("Ciudad").value,
+                        email: document.getElementById("Email").value,
+                        direccion: document.getElementById("Direccion").value,
+                        telefono: document.getElementById("Telefono").value,
+                        tipo_vehiculo:
+                            document.getElementById("vehiculo").value,
+                        matricula: document.getElementById("Matricula").value,
+                        fechaEntrada:
+                            document.getElementById("fecha_Entrada").value,
+                        fechaNacimiento:
+                            document.getElementById("fecha_Nacimiento").value,
+                        fechaExpedicion:
+                            document.getElementById("fecha_Expedicion").value,
+                        parcela: document.getElementById("parcela").value,
+                        luz: document.getElementById("Luz").checked,
+                        pais: document.getElementById("Pais").value,
+                        Ncliente: NumAcompanante,
+                    },
                 };
                 if (NumAcompanante > 0) {
                     for (let i = 1; i <= NumAcompanante; i++) {
                         formData["Acompanante" + i] = {
-                            nombre: document.getElementById('Nombre' + i).value,
-                            apellidos: document.getElementById('Apellidos' + i).value,
-                            dni: document.getElementById('DNI' + i).value,
-                            tipo_documento: document.getElementById('Documento' + i).value,
-                            sexo: document.getElementById('Sexo' + i).value,
-                            fechaNacimiento: document.getElementById('fecha_Nacimiento' + i).value
+                            nombre: document.getElementById("Nombre" + i).value,
+                            apellidos: document.getElementById("Apellidos" + i)
+                                .value,
+                            dni: document.getElementById("DNI" + i).value,
+                            tipo_documento: document.getElementById(
+                                "Documento" + i,
+                            ).value,
+                            sexo: document.getElementById("Sexo" + i).value,
+                            fechaNacimiento: document.getElementById(
+                                "fecha_Nacimiento" + i,
+                            ).value,
                         };
                     }
                 }
@@ -162,137 +178,177 @@
             } else {
                 alert("No ha seleccionado parcela");
             }
-
         } else {
             alert("No hay conexión al servidor. Inténtelo de nuevo más tarde.");
         }
     }
-
 </script>
 
-
 <body>
-<!-- Contenedor principal del formulario -->
-<div class="main">
-    <!-- Formulario con campos de entrada, selectores y botones -->
-    <form on:submit={enviarFormulario}>
-        <h2>Cliente principal</h2>
+    <!-- Contenedor principal del formulario -->
+    <div class="main">
+        <!-- Formulario con campos de entrada, selectores y botones -->
+        <form on:submit={enviarFormulario}>
+            <h2>Cliente principal</h2>
 
-        <!-- Campos de Entrada -->
-        <Inputs name="Nombre" id="Nombre" type="text" />
-        <Inputs name="Apellidos" id="Apellidos" type="text" />
+            <div id="column">
+                <!-- Campos de Entrada -->
+                <label for="Nombre">Nombre:</label>
+                <label for="Apellidos">Apellidos:</label>
+                <Inputs name="Nombre" id="Nombre" type="text" />
+                <Inputs name="Apellidos" id="Apellidos" type="text" />
 
-        <!-- Selector para el campo 'sexo' -->
-        <label for={`sexo`}>Sexo</label>
-        <select id={`sexo`}>
-            <option value="Masculino">Masculino</option>
-            <option value="Femenino">Femenino</option>
-        </select>
+                <!-- Selector para el campo 'sexo' -->
+                <div>
+                    <label for={`sexo`}>Sexo</label>
+                    <select id={`sexo`}>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </select>
+                </div>
 
-        <!-- Selector para el campo 'Documento' -->
-        <label for={`Documento`}>Documento</label>
-        <select id={`Documento`}>
-            <option value="DNI">DNI</option>
-            <option value="Pasaporte">Pasaporte</option>
-        </select>
+                <!-- Selector para el campo 'Documento' -->
+                <div>
+                    <label for={`Documento`}>Documento</label>
+                    <select id={`Documento`}>
+                        <option value="DNI">DNI</option>
+                        <option value="Pasaporte">Pasaporte</option>
+                    </select>
+                </div>
 
-        <!-- Campos con información general -->
-        <Inputs name="DNI" id="DNI" type="text" />
-        <Inputs name="Ciudad" id="Ciudad" type="text" />
-        <Inputs name="Pais" id="Pais" type="text" />
-        <Inputs name="Email" id="Email" type="text" />
-        <Inputs name="Dirección" id="Direccion" type="text" />
-        <Inputs name="Telefono" id="Telefono" type="text" />
+                <!-- Campos con información general -->
+                <label for="DNI">DNI:</label>
+                <label for="Ciudad">Ciudad:</label>
+                <Inputs name="DNI" id="DNI" type="text" />
+                <Inputs name="Ciudad" id="Ciudad" type="text" />
+                <label for="Pais">País:</label>
+                <label for="Email">Email:</label>
+                <Inputs name="Pais" id="Pais" type="text" />
+                <Inputs name="Email" id="Email" type="text" />
+                <label for="Direccion">Dirección:</label>
+                <label for="Telefono">Teléfono:</label>
+                <Inputs name="Dirección" id="Direccion" type="text" />
+                <Inputs name="Telefono" id="Telefono" type="text" />
 
-        <label for={`vehiculo`}>Tipo de vehículo</label>
-        <select id={`vehiculo`}>
-            <option value="Autocaravana">Autocaravana</option>
-            <option value="Caravana">Caravana</option>
-            <option value="Camper">Camper</option>
-        </select>
-        <Inputs name="Matricula" id="Matricula" type="text" />
+                <label for={`vehiculo`}>Tipo vehículo</label>
+                <label for="Matricula">Matrícula:</label>
+                <select id={`vehiculo`}>
+                    <option value="Autocaravana">Autocaravana</option>
+                    <option value="Caravana">Caravana</option>
+                    <option value="Camper">Camper</option>
+                </select>
+                <Inputs name="Matricula" id="Matricula" type="text" />
 
-        <!-- Campos de Fecha -->
-        <label for="fecha_Entrada">Fecha entrada <Inputs name="fecha Entrada" id="fecha_Entrada" type="date" /></label>
-        <label for="fecha_Nacimiento">Fecha nacimiento <Inputs name="fecha Nacimiento" id="fecha_Nacimiento" type="date" requerido=false /></label>
-        <label for="fecha_Expedicion">Fecha expedición <Inputs name="fecha Expedicion" id="fecha_Expedicion" type="date" /></label>
+                <!-- Campos de Fecha -->
+                <label for="fecha_Entrada">Fecha entrada</label>
+                <label for="fecha_Nacimiento">Fecha nacimiento</label>
+                <Inputs name="fecha Entrada" id="fecha_Entrada" type="date" />
+                <Inputs name="fecha Nacimiento" id="fecha_Nacimiento" type="date" />
+                <div>
+                    <label for="fecha_Expedicion">Fecha expedición </label>
+                    <Inputs name="fecha Expedicion" id="fecha_Expedicion" type="date"/>
+                </div>
+                <Selector name="parcela"/>
 
-        <!-- Contenedor para Selector, Botón de Luz y Componente de Envío -->
-        <div id="con" >
-            <Selector name="parcela"  />
-            <Boton_luz />
-        </div>
+                <!-- Contenedor para Selector, Botón de Luz y Componente de Envío -->
+                <Boton_luz />
 
-        <div style="padding-bottom: 22px"></div> <!-- Separa el boton de luz de los acompañantes -->
-        <Acompanante numAcompanantes={numAcompanantesValue} />
+            </div>
 
-        <!-- Botón para agregar acompañante -->
-        <button id="agregar" type="button" on:click={agregarAcompanante}>Agregar Acompañante</button>
+            <div style="padding-bottom: 22px"></div>
+            <!-- Separa el boton de luz de los acompañantes -->
+            <Acompanante numAcompanantes={numAcompanantesValue} />
 
-        <!-- Botón para eliminar acompañante, solo si hay acompañantes -->
-        {#if numAcompanantesValue > 0}
-            <button id="eliminar" type="button" on:click={eliminarAcompanante}>Eliminar Acompañante</button>
-        {/if}
+            <!-- Botón para agregar acompañante -->
+            <button id="agregar" type="button" on:click={agregarAcompanante}
+                >Agregar Acompañante</button
+            >
 
-        <!-- Botón de envío del formulario -->
-        <Inputs name="boton" id="boton" type="submit" />
-    </form>
-</div>
+            <!-- Botón para eliminar acompañante, solo si hay acompañantes -->
+            {#if numAcompanantesValue > 0}
+                <button
+                    id="eliminar"
+                    type="button"
+                    on:click={eliminarAcompanante}>Eliminar Acompañante</button
+                >
+            {/if}
+
+            <!-- Botón de envío del formulario -->
+            <Inputs name="boton" id="boton" type="submit" />
+        </form>
+    </div>
 </body>
-
 
 <style>
     /* Estilos generales para el formulario principal */
     .main {
         padding-top: 20px;
     }
-    label {
-        margin-right: 10px;
-        margin-left: 10%;
+    
+
+    #column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
     }
-
-
-
 
     /* Ajuste de tamaño de fuente para mejorar la legibilidad de las etiquetas */
     label {
         margin-right: 4px;
-        margin-left: 10%;
-
+        margin-left: 13%;
         font-size: 12px;
+        font-family: Helvetica, sans-serif;
+        font-weight: bold;
         display: inline;
-
     }
 
-    h2{
-        padding-bottom: 10px;
+    h2 {
+        padding-bottom: 25px;
+        margin-left: 20px;
+        font-family: Helvetica, sans-serif;
+        font-weight: bold;
     }
 
-    button{
+    button {
         display: flex;
         justify-content: center;
         align-items: center;
     }
-    #agregar{
 
-        padding: 10px 10px;
-        font-size: 16px;
-        background-color: #84de59; /* Color de fondo */
-        color: #000000; /* Color de texto */
-        border: solid   black; /* Sin borde */
-        border-radius: 30px; /* Bordes redondeados */
-        display: inline-block;
+    #row{
+        display: grid;
+        grid-template-rows: 1fr 1fr;
     }
-
-    #eliminar{
-
-        padding: 10px 10px;
-        font-size: 16px;
-        background-color: rgb(231, 21, 21); /* Color de fondo */
-        color: #000000; /* Color de texto */
-        border: solid   black; /* Sin borde */
-        border-radius: 30px; /* Bordes redondeados */
+    
+    #agregar {
+        padding: 12px 20px;
+        font-size: 18px;
+        background-color: #4CAF50; /* Verde */
+        color: #ffffff; /* Texto en color blanco para mayor contraste */
+        border: 2px solid #2d862d; /* Borde verde oscuro */
+        border-radius: 25px; /* Bordes redondeados */
         display: inline-block;
+        margin-left: 110px; /* Ajuste del margen izquierdo */
+        margin-bottom: 5px;
+        margin-top: 15px;
+        width: 218px; /* Ancho específico */
+        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Agrega transiciones para una experiencia más suave */
+}
+
+    #eliminar {
+        padding: 12px 20px;
+        font-size: 18px;
+        background-color: #e74c3c; /* Rojo */
+        color: #ffffff; /* Texto en color blanco para mayor contraste */
+        border: 2px solid #c0392b; /* Borde rojo oscuro */
+        border-radius: 25px; /* Bordes redondeados */
+        display: inline-block;
+        margin-left: 110px; /* Ajuste del margen izquierdo */
+        margin-bottom: 15px;
+        margin-top: 5px;
+        width: 218px; /* Ancho específico */
+        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Agrega transiciones para una experiencia más suave */
     }
 
     /* Estilo para el select */
@@ -301,7 +357,9 @@
         border: 1px solid #000000;
         border-radius: 4px;
         cursor: pointer;
+        font-size: 12px;
+        font-family: Helvetica, sans-serif;
+        margin-bottom: 10px;
     }
+
 </style>
-
-
