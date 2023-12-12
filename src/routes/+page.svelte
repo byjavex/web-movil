@@ -273,7 +273,6 @@
     .main {
         padding-top: 20px;
     }
-    
 
     #column {
         display: grid;

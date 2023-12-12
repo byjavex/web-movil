@@ -128,7 +128,6 @@ input {
     display: block;
     border: 2px solid #000000;
     border-radius: 8px;
-    width: 80%;
     padding: 12px;
     transition: box-shadow 0.3s ease;
     font-family: 'Helvetica', sans-serif;

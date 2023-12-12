@@ -37,8 +37,9 @@
 <style>
     /* Estilos para el encabezado */
     div {
-        border-bottom: 2px solid black;
-        background-color: #00ffb3;
+        border-bottom: 2px solid #aef0fb;
+        background-color: #98e8d8;
+
         width: 100%;
         height: 7rem;
         display: flex;
@@ -71,6 +72,8 @@
             height: auto; /* Ajusta la altura automáticamente en dispositivos móviles */
         }
     }
+
+
 
     @media only screen and (max-width: 200px) {
         div {
