@@ -121,6 +121,7 @@
 <style>
     /* Estilos para todos los campos de entrada */
 input {
+    width: 80%;
     box-sizing: border-box;
     margin-bottom: 15px;
     margin-left: auto;

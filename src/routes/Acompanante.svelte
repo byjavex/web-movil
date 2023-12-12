@@ -61,7 +61,7 @@
                     <!-- Campo de entrada para el Número de Documento del acompañante -->
                     <label for="DNI">DNI:</label>
                     <label for="fecha_Nacimiento">Fecha nacimiento</label>
-                    <Inputs name={`Número documento del acompañante ${i + 1}`} id={`DNI${i + 1}`} type="text" />
+                    <Inputs name={`Numero documento ${i + 1}`} id={`DNI${i + 1}`} type="text" />
 
                     <!-- Etiqueta y campo de fecha de nacimiento del acompañante -->
                     <Inputs name="fecha Nacimiento" id={`fecha_Nacimiento${i + 1}`} type="date" requerido=false />

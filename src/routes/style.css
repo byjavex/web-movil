@@ -7,4 +7,5 @@
 body{
     background-color: #aef0fb;
     overflow: hidden;
+    overflow-y: scroll;
 }
