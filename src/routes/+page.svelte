@@ -222,7 +222,7 @@
                 <label for="vehiculo">Tipo vehículo</label>
                 <label for="Matricula">Matrícula:</label>
                 <select id="vehiculo">
-                    <option value="Autocaravana">Auto</option>
+                    <option value="Autocaravana">Autocaravana</option>
                     <option value="Caravana">Caravana</option>
                     <option value="Camper">Camper</option>
                 </select>
