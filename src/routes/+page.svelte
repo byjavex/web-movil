@@ -78,7 +78,6 @@
         }
     }
 
-    // Objeto para almacenar datos del formulario
 
     // Función para enviar el formulario
     async function enviarFormulario() {
