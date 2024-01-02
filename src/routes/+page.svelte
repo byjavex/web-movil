@@ -42,6 +42,26 @@
     let socket;
     let isConnected = true;  // !!!!!!!!!!!!!!!ESTO HAY QUE CAMBIARLO , PARA LA PRUEBA DEL DIA 13 ESTÁ BIEN ASI
 
+    // Función para agregar un acompañante
+    function agregarAcompanante() {
+        numAcompanantesValue += 1;
+        // console.log(numAcompanantesValue + " fuera")
+    }
+
+
+
+    // Función para eliminar un acompañante
+    function eliminarAcompanante() {
+        // Verifica si hay acompañantes antes de mostrar el mensaje de confirmación
+        if (numAcompanantesValue > 0) {
+            const confirmacion = window.confirm("¿Estás seguro de eliminar el acompañante?");
+
+            if (confirmacion && numAcompanantesValue > 0) {
+                numAcompanantesValue -= 1;
+            }
+        }
+    }
+
     if (browser) {
         // Establecimiento de la conexión WebSocket al cargar la página
         socket = new WebSocket('ws://localhost:5173/');
@@ -60,23 +80,7 @@
         }
     }
 
-    // Función para agregar un acompañante
-    function agregarAcompanante() {
-        numAcompanantesValue += 1;
-        // console.log(numAcompanantesValue + " fuera")
-    }
 
-    // Función para eliminar un acompañante
-    function eliminarAcompanante() {
-        // Verifica si hay acompañantes antes de mostrar el mensaje de confirmación
-        if (numAcompanantesValue > 0) {
-            const confirmacion = window.confirm("¿Estás seguro de eliminar el acompañante?");
-
-            if (confirmacion && numAcompanantesValue > 0) {
-                numAcompanantesValue -= 1;
-            }
-        }
-    }
 
 
     // Función para enviar el formulario
@@ -134,6 +138,8 @@
                         fechaNacimiento: document.getElementById('fecha_Nacimiento').value,
                         fechaExpedicion: document.getElementById('fecha_Expedicion').value,
                         parcela: document.getElementById('parcela').value,
+                        Region: document.getElementById('region').value,
+                        Com_Autonoma:  document.getElementById('region').value,
                         luz: document.getElementById('Luz').checked,
                         pais: document.getElementById('Pais').value,
                         Ncliente: NumAcompanante
@@ -202,12 +208,23 @@
                         <option value="DNI">DNI</option>
                         <option value="Pasaporte">Pasaporte</option>
                     </select>
+                    <label for="region">Region</label>
+                    <select id="region">
+                        <option value="Espana">España</option>
+                        <option value="UnionEuropea">Union Europea</option>
+                        <option value="NoUnionEuropea">No europeo</option>
+                    </select>
                 </div>
+
+
+
+
 
                 <!-- Campos con información general -->
                 <label for="DNI">DNI:</label>
                 <label for="Ciudad">Ciudad:</label>
                 <Inputs name="DNI" id="DNI" type="text" />
+
                 <Inputs name="Ciudad" id="Ciudad" type="text" />
                 <label for="Pais">País:</label>
                 <label for="Email">Email:</label>
@@ -217,7 +234,6 @@
                 <label for="Telefono">Teléfono:</label>
                 <Inputs name="Dirección" id="Direccion" type="text" />
                 <Inputs name="Telefono" id="Telefono" type="text" />
-
                 <label for="vehiculo">Tipo vehículo</label>
                 <label for="Matricula">Matrícula:</label>
                 <select id="vehiculo">
@@ -241,7 +257,14 @@
                 <!-- Contenedor para Selector, Botón de Luz y Componente de Envío -->
                 <Boton_luz />
 
+
+                <!-- ESTO HAY QUE MOVERLO DE SITIO PARA QUE ENCAJE BIEN -->
+                <div> <label for="Com_Autonoma">Com Autonoma:</label>
+                    <Inputs name="Com_Autonoma" id="Com_Autonoma" type="text" /></div>
+
             </div>
+
+
 
             <div style="padding-bottom: 22px"></div>
             <!-- Separa el boton de luz de los acompañantes -->
@@ -257,8 +280,7 @@
                 <button
                     id="eliminar"
                     type="button"
-                    on:click={eliminarAcompanante}>Eliminar Acompañante</button
-                >
+                    on:click={eliminarAcompanante}>Eliminar Acompañante</button>
             {/if}
 
             <!-- Botón de envío del formulario -->
@@ -299,11 +321,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-    #row{
-        display: grid;
-        grid-template-rows: 1fr 1fr;
     }
 
     #agregar,
