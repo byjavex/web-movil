@@ -64,7 +64,7 @@
 
     if (browser) {
         // Establecimiento de la conexión WebSocket al cargar la página
-        socket = new WebSocket('ws://localhost:5173/');
+        socket = new WebSocket('ws://localhost:8765/');
 
         // Manejo del evento de cierre de la conexión
         socket.onclose = function () {
@@ -95,7 +95,7 @@
                 try {
                     // Intenta abrir la conexión WebSocket
                     await new Promise(resolve => setTimeout(resolve, 1000)); // Espera 1 segundo antes de intentar la reconexión
-                    socket = new WebSocket('ws://localhost:5173/');
+                    socket = new WebSocket('ws://localhost:8765/');
                     intentos++;
 
                     // Espera a que la conexión se abra
@@ -122,7 +122,7 @@
                 let formData = {};
                 let NumAcompanante = numAcompanantesValue
                 formData = {
-                    cliente: {
+                        id: "init_connection_BD_insert",
                         nombre: document.getElementById('Nombre').value,
                         apellidos: document.getElementById('Apellidos').value,
                         sexo: document.getElementById('sexo').value,
@@ -143,7 +143,7 @@
                         luz: document.getElementById('Luz').checked,
                         pais: document.getElementById('Pais').value,
                         Ncliente: NumAcompanante
-                    }
+
                 };
                 if (NumAcompanante > 0) {
                     for (let i = 1; i <= NumAcompanante; i++) {
