@@ -139,7 +139,7 @@
                         fechaExpedicion: document.getElementById('fecha_Expedicion').value,
                         parcela: document.getElementById('parcela').value,
                         Region: document.getElementById('region').value,
-                        Com_Autonoma:  document.getElementById('region').value,
+                        Com_Autonoma:  document.getElementById('Com_Autonoma').value,
                         luz: document.getElementById('Luz').checked,
                         pais: document.getElementById('Pais').value,
                         Ncliente: NumAcompanante
