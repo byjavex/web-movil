@@ -40,15 +40,13 @@
 
     // Inicialización de variables y conexión WebSocket
     let socket;
-    let isConnected = true;  // !!!!!!!!!!!!!!!ESTO HAY QUE CAMBIARLO , PARA LA PRUEBA DEL DIA 13 ESTÁ BIEN ASI
+    let isConnected = false;  // !!!!!!!!!!!!!!!ESTO HAY QUE CAMBIARLO , PARA LA PRUEBA DEL DIA 13 ESTÁ BIEN ASI
 
     // Función para agregar un acompañante
     function agregarAcompanante() {
         numAcompanantesValue += 1;
         // console.log(numAcompanantesValue + " fuera")
     }
-
-
 
     // Función para eliminar un acompañante
     function eliminarAcompanante() {
@@ -59,6 +57,20 @@
             if (confirmacion && numAcompanantesValue > 0) {
                 numAcompanantesValue -= 1;
             }
+        }
+    }
+
+    function onSocketOpen() {
+        isConnected = true;
+        console.log("Conectado al servidor WebSocket");
+        alert("Conexión establecida con el servidor ");
+    }
+
+    function checkConnection() {
+        if (socket.readyState !== WebSocket.OPEN) {
+            // La conexión no está abierta
+            isConnected = false;
+            console.log("La conexión no está abierta");
         }
     }
 
@@ -73,11 +85,11 @@
             alert("No se puede conectar con el servidor, recargue la página");
         }
 
-        // Manejo del evento de apertura de la conexión
-        socket.onopen = function () {
-            isConnected = true;
-            console.log("Conectado al servidor WebSocket");
-        }
+        // Asignar la función onSocketOpen al evento onopen del WebSocket
+        socket.onopen = onSocketOpen;
+
+        // Verificar el estado de la conexión cada 5 segundos (puedes ajustar el intervalo según tus necesidades)
+        setInterval(checkConnection, 5000);
     }
 
 
@@ -164,6 +176,7 @@
                 console.log(formData);
                 // Envío de los datos del formulario al servidor a través de la conexión WebSocket
                 socket.send(JSON.stringify(formData));
+
             } else {
                 alert("No ha seleccionado parcela");
                 return;
