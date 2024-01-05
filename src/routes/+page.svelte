@@ -196,8 +196,8 @@
                 <div>
                     <label for={`sexo`}>Sexo</label>
                     <select id={`sexo`}>
-                        <option value="Masculino">Masculino</option>
-                        <option value="Femenino">Femenino</option>
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
                     </select>
                 </div>
 

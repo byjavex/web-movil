@@ -44,8 +44,8 @@
                     <div>
                         <label for={`Sexo${i + 1}`}>Sexo</label>
                         <select id={`Sexo${i + 1}`}>
-                            <option value="Masculino">Masculino</option>
-                            <option value="Femenino">Femenino</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
                         </select>
                     </div>
 
